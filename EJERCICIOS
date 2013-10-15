@@ -1,0 +1,141 @@
+¿Cómo usar este material?:
+
+- Ejecuta el juego finalizado: http://cykod.github.io/AlienInvasion/
+
+- Para cada prototipo, primero leemos los tests, y los interpretamos
+  como especificaciones de los requisitos del prototipo
+
+- Después leemos el código y ejecutamos el prototipo: firefox
+  index.html
+  
+- Luego comprobamos si pasan los tests: firefox SpecRunner.html
+
+- Finalmente, realizamos cambios a los tests / código según requieran
+  los ejercicios
+
+
+
+EJERCICIOS
+
+
+1. Comprueba que todos los tests del prototipo 11-collission siguen
+   pasando en este prototipo
+
+2. Consulta la especificación de este prototipo en el fichero
+   spec/LevelSpec.js
+
+3. Estudia los cambios que se han realizado en el código para
+   implementar los niveles de juego en este prototipo:
+
+   Definición de tipos de enemigos:
+
+     En game.js se han creado en la variable enemies nuevas plantillas
+     que definen tipos de enemigos.
+
+
+   Representación de los niveles: 
+
+     Un nivel está definido como una batería de generadores de
+     enemigos. Cada generador de enemigos crea durante un intervalo de
+     tiempo enemigos de cierto tipo, con una frecuencia determinada.
+
+     En la variable level1 de game.js se han definido 8 baterías de
+     enemigos (8 filas en el array level1).
+
+
+   Carga inicial y finalización de un nivel.
+
+
+     El método playGame() en game.js es el que se ejecuta cuando
+     comienza el juego. Se ha modificado para añadir un nuevo nivel,
+     como un tablero más del juego.
+
+     El nivel va añadiendo al tablero de juegos las naves enemigas en
+     los momentos indicados en la definición del nivel que se pasa al
+     constructor.
+
+     Cuando termina el nivel se gana el juego porque todas las naves
+     enemigas han desaparecido, sin que colisionen con la nave del
+     jugador, el nivel llama a la función winGame que se pasa como
+     parámetro al constructor del nivel.
+
+     Si una nave enemiga colisiona con la nave del jugador, se pierde
+     el juego. En el método .hit() de PlayerShip se realiza la llamada
+     a la función loseGame definida en game.js cuando dicha situación
+     ocurre.
+
+
+   Implementación del constructor/clase Level.
+
+     En engine.js se implementa el constructor Level().
+
+     Los objetos level implementan la interfaz step() y draw(), lo que
+     les permite ser añadidos como un tablero más al juego para que
+     Game.loop() llame periódicamente a los métodos .step() y .draw()
+     del nivel. 
+
+     En el método step() de Level se añaden los del nivel sprites al
+     tablero de juegos. En draw() no se hace nada pues la aparición de
+     los objetos de un nivel se realiza por el propio tablero de
+     juegos.
+
+
+   GameBoard.cnt
+
+     Se ha añadido a GameBoard la propiedad .cnt que almacena cuántos
+     objetos de cada tipo almacena el tablero de juegos:
+       - Se actualiza en  GameBoard.add()
+       - Se consulta en Level.finalizeRemoved(). 
+       - Se consulta al final de Level.step() para determinar si ha
+         terminado el nivel
+
+
+4. Añade la animación de una explosión para que se muestre cuando una
+   nave enemiga colisione con la nave del jugador. El juego no deberá
+   finalizar hasta que no termine la animación de la explosión de la
+   nave del jugador.
+
+5. Experimenta con los valores de las definiciones de los enemigos en
+   la variable enemies de game.js para definir diferentes patrones de
+   movimiento.
+
+6. Añade otro nivel al juego, y modifica el juego para que termine
+   cuando hayan terminado los dos niveles, o cuando se mate la nave
+   enemiga.
+
+   Tras acabar el primer nivel deberá salir una pantalla (usa
+   TitleScreen()) en la que se informe de de que comienza el nivel
+   2. Hasta que el usuario no pulse la tecla espacio en esta pantalla
+   no comenzará el nivel 2.
+
+7. Añade tests unitarios para Level al fichero spec/LevelSpec.js
+
+8. Añade pruebas de integración al fichero spec/LevelSpec.js que
+   prueben:
+
+   - que el juego, tras cargar la pantalla inicial, comienza el nivel
+     1, y va generando naves enemigas hasta que el jugador consigue
+     pasar el nivel 1 (si mueves la nave a la derecha del todo en el
+     test no te alcanzará ninguna nave enemiga). Depués, el test
+     deberá provocar que comience el nivel 2, debiendo probar que
+     cuando termine el nivel 2 termina el juego, ganando el jugador.
+
+   - que el juego, tras cargar la pantalla inicial, comienza el nivel
+     1, y va generando naves enemigas, y cuando alguna de ellas
+     alcanza a la nave del jugador, el juego termina, perdiendo el
+     jugador.
+
+   - opcionalmente, añade otras pruebas de integración que consideres
+     oportunas para probar los niveles.
+ 
+   Para estas pruebas de integración puedes utilizar todos los objetos
+   reales (no dobles) que consideres razonable. A diferencia de lo que
+   hemos hecho en la práctica anterior, el objetivo en esta ocasión NO
+   es realizar pruebas unitarias, sino pruebas de integración en las
+   que se use el código real de varias clases del juego. 
+
+
+
+
+
+

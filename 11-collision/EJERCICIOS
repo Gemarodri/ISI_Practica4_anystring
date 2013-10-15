@@ -1,0 +1,189 @@
+¿Cómo usar este material?:
+
+- Ejecuta el juego finalizado: http://cykod.github.io/AlienInvasion/
+
+- Para cada prototipo, primero leemos los tests, y los interpretamos
+  como especificaciones de los requisitos del prototipo
+
+- Después leemos el código y ejecutamos el prototipo: firefox
+  index.html
+  
+- Luego comprobamos si pasan los tests: firefox SpecRunner.html
+
+- Finalmente, realizamos cambios a los tests / código según requieran
+  los ejercicios
+
+
+
+EJERCICIOS
+
+
+1. Comprueba que todos los tests del prototipo 10-refactor siguen pasando en
+   este prototipo
+
+2. Consulta la especificación de este prototipo en el fichero
+   spec/ColissionsSpec.js
+
+3. Estudia los cambios que se han realizado en el código para detectar
+   los dos tipos de colisiones:
+
+   Se han definido en game.js cinco tipos de objetos:
+
+     var OBJECT_PLAYER            =  1, 
+         OBJECT_PLAYER_PROJECTILE =  2, 
+         OBJECT_ENEMY             =  4, 
+         OBJECT_ENEMY_PROJECTILE  =  8, 
+         OBJECT_POWERUP           = 16;
+
+   Los valores (1, 2, 4, 8, 16) son potencias de 2 por lo que se puede
+   comprobar eficientemente la pertenencia a un tipo u otro con
+   operadores lógicos binarios que realizan la operación lógica (&
+   para AND, | para OR) bit a bit. Veamos cómo esta representación de
+   los valores permite relizar dos tareas:
+
+   a) En collide() se puede comprobar si el tipo que pasan como
+      argumento a collide es el tipo del objeto que se está evaluando
+      en el iterador. Fíjate en la 1ª línea dentro del if de collide:
+
+      ... this.type & type
+
+      & es el operador AND binario, que realiza un AND lógico, bit a
+      bit entre sus operandos. Si type es OBJECT_ENEMY, o sea
+      0000...0100 y this.type es también OBJECT_ENEMY, el resultado es
+      0000...0100, y por tanto true. Si por el contrario type es
+      OBJECT_ENEMY y this.type es OBJECT_PLAYER, o sea 0000...0001, el
+      resultado del & bit a bit es 0000...0000, o sea, false.
+
+   b) También permite llamar a collide para comprobar con varios tipos
+      de objetos a la vez:
+
+      .collide(miNave, OBJECT_ENEMY | OBJECT_ENEMY_PROJECTILE)
+
+      Sabiendo que | es el operador OR binario (hace un OR bit a bit
+      entre sus operandos), el segundo argumento que se pasa a
+      .collide(), o sea, type, es 0000...0100 | 0000...1000 ==
+      0000...1100
+
+      collide() por tanto devolvería true en su línea this.type & type
+      para objetos this que sean o enemigos o proyectiles de enemigos.
+
+
+  En el código de game.js, a cada uno de los 3 objetos de game.js se
+  le añade su tipo como una propiedad de su prototipo:
+
+    PlayerShip.prototype = new Sprite();
+    PlayerShip.prototype.type = OBJECT_PLAYER;
+    ...
+ 
+    PlayerMissile.prototype = new Sprite();
+    PlayerMissile.prototype.type = OBJECT_PLAYER_PROJECTILE;
+    ...
+
+    Enemy.prototype = new Sprite();
+    Enemy.prototype.type = OBJECT_ENEMY;
+
+
+  Implementación de la detección de colisiones:
+
+    1. Colisión de misil con enemigo:
+
+       El misil tiene una nueva propiedad damage que se pasa como
+       argumento a setup() en su constructor para que cuando haya una
+       colisión se informe del daño ocasionado al objeto alcanzado.
+
+       Cuando un objeto colisione con un sprite se llamará al método
+       hit() del sprite. Para ello se añade en sprite.js el método
+       Sprite.prototype.hit(). Recibe como argumento el daño
+       ocasionado, que es en este prototipo una nueva propiedad de los
+       misiles.  El comportamiento por defecto de un sprite cuando es
+       alcanzado es eliminarse del tablero de juego a sí mismo como
+       puede verse en la implementación de Sprite.prototype.hit()
+
+       En game.js modificamos el método step() de PlayerMissile para
+       que cuando alcance a un enemigo llame al método hit() del
+       enemigo. Además el propio misil se elimina a sí mismo del
+       tablero de juego.
+
+       Para que visualmente sea más evidente la colisión de un misil
+       con un enemigo, se ha añadido la animación de la Explosión al
+       método hit() de Enemy, que reemplaza el heredado de
+       Sprite. Cuando el enemigo es alcanzado:
+
+         a) Añadimos el sprite de la explosion a la variable sprites
+            de game.js
+
+         b) Añadimos una nueva propiedad health a la plantilla basic
+            de la variable enemigos.
+
+         c) Reemplazamos el método hit() heredado de Sprite en Enemy
+            proporcionando un nuevo método hit() para que reduzca el
+            valor de health en tantas unidades como indique el
+            parámetro damage pasado en hit(). Si health llega a cero,
+            se añade el sprite de la explosión al tablero de juegos.
+
+         d) Finalmente añadimos la clase Explosion que simplemente va
+            cambiando el valor del frame del sprite de la explosión
+            que se muestra: cada 3 llamadas a step() se cambia al
+            siguiente frame. Al final, se elimina la explosión del
+            tablero.
+
+
+   2. Colisión de enemigo con la nave del jugador:
+
+      Se modifica el método step() de Enemy para que compruebe si tras
+      moverse ha colisionado con la nave del jugador, en cuyo caso el
+      objeto enemigo llama al método hit() de la nave del jugador, y
+      se elimina a sí mismo del tablero de juego. La nave del jugador
+      también se elimina a sí misma. Su método hit() está heredado de
+      la clase Sprite.
+
+
+   
+4. Nuevo requisito: Haz que las bolas de fuego que añadiste en los
+   ejercicios del prototipo 09-enemies se comporten de modo similar a
+   los misiles: 
+
+     - si antes de que desaparezcan por la parte inferior de la
+       pantalla una bola de fuego colisiona con una nave enemiga, le
+       inflinge un daño tan grande que la destruye, sea cual sea la
+       salud de la nave enemiga.
+
+     - la bola de fuego, tras colisionar, no se destruye, siguiendo su
+       trayectoria parabólica hasta desaparecer por la parte inferior,
+       destruyendo a otras naves enemigas si colisiona con ellas.
+
+     - las bolas de fuego no afectan a ningún otro elemento del juego
+       más que a las naves enemigas.
+
+
+5. En esta ocasión no vamos a realizar pruebas unitarias sino
+   **pruebas de integración**.  En lugar de probar por separado el código
+   relacionado con colisiones en las clases PlayerMissile, Enemy,
+   PlayerShip y FireBall, escribe en el fichero spec/CollisionSpec.js
+   pruebas en las que intervengan objetos de estas clases, y no dobles de
+   ellos, para probar:
+
+   - que un misil con el daño suficiente que colisiona con una nave
+     enemiga la destruye, eliminándose la nave y el misil del tablero
+     de juegos
+
+   - que un misil con daño insuficiente que colisiona con una nave
+     enemiga no la destruye, reduce la salud de la nave enemiga, y
+     desaparece del tablero de juegos sin que desaparezca la nave
+     enemiga
+
+   - que una bola de fuego que colisiona con una nave la destruye
+     siempre, desapareciendo del tablero de juegos la nave enemiga, y
+     no desapareciendo la bola de fuego
+
+   - que una nave enemiga que colisiona con la nave del jugador la
+     destruye, eliminándose tanto la nave enemiga como la nave del
+     jugador tras aparecer la explosión en la pantalla
+
+   En estas pruebas de integración queremos comprobar que el código
+   real de GameBoard, PlayerShip, PlayerMissile, Enemy y FireBall
+   interacciona correctamente, por lo que no deberás crear objetos
+   dummy para ellos. Sin embargo, no queremos probar el código del
+   resto de objetos (Game, SpriteSheet,...), por lo que estos últimos
+   sí deben ser substituidos por dobles.
+
