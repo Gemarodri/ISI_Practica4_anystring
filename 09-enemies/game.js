@@ -9,9 +9,9 @@ var sprites = {
 
 
 var enemies = {
-    // B, C y E substituirán a los valores por defecto definidos en la
+    // B, C y E substituirï¿½n a los valores por defecto definidos en la
     // variable baseParameters del constructor Enemy(). Ver
-    // comentarios en el código del constructor al final del fichero.
+    // comentarios en el cï¿½digo del constructor al final del fichero.
     basic: { x: 100, y: -50, sprite: 'enemy_purple', B: 100, C: 2 , E: 100 }
 
 };
@@ -30,9 +30,9 @@ var startGame = function() {
 var playGame = function() {
     var board = new GameBoard();
 
-    // Se añade un enemigo con las propiedades definidas en enemies.basic
+    // Se aï¿½ade un enemigo con las propiedades definidas en enemies.basic
     board.add(new Enemy(enemies.basic));
-    // Se añade un enemigo con las propiedades definidas en
+    // Se aï¿½ade un enemigo con las propiedades definidas en
     // enemies.basic, pero con la propiedad x = 200 definida en el
     // segundo argumento de la llamada al constructor. Ver comentarios en el
     // constructor Enemy al final de este fichero.
@@ -48,7 +48,7 @@ var playGame = function() {
 // transparente, sino fondo en negro
 var Starfield = function(speed,opacity,numStars,clear) {
 
-    // Creamos un objeto canvas, no visible en la página Web
+    // Creamos un objeto canvas, no visible en la pï¿½gina Web
     var stars = $('<canvas/>')
 	.attr('width', Game.width)
 	.attr('height', Game.height)[0];
@@ -62,7 +62,7 @@ var Starfield = function(speed,opacity,numStars,clear) {
 
     var offset = 0;
 
-    // Si la opción clear está activada, el fondo del canvas se pinta
+    // Si la opciï¿½n clear estï¿½ activada, el fondo del canvas se pinta
     // de negro. Utilizado en el nivel mas profundo de estrellas
     if(clear) {
 	starCtx.fillStyle = "#000";
@@ -70,7 +70,7 @@ var Starfield = function(speed,opacity,numStars,clear) {
     }
 
     // Dibujamos las estrellas blancas sobre el canvas no visible,
-    // como rectángulos de 2 pixeles en posiciones aleatorias
+    // como rectï¿½ngulos de 2 pixeles en posiciones aleatorias
     starCtx.fillStyle = "#FFF";
     starCtx.globalAlpha = opacity; // nivel de transparencia de las estrellas
     for(var i=0;i<numStars;i++) {
@@ -80,7 +80,7 @@ var Starfield = function(speed,opacity,numStars,clear) {
 			 2);
     }
 
-    // Se llama a este método en cada frame de la animación para dibujar
+    // Se llama a este mï¿½todo en cada frame de la animaciï¿½n para dibujar
     // el campo de estrellas en la pantalla
     this.draw = function(ctx) {
 	var intOffset = Math.floor(offset);
@@ -107,8 +107,8 @@ var Starfield = function(speed,opacity,numStars,clear) {
 	}
     }
 
-    // En cada paso de la animación, movemos el campo de estrellas
-    // modificando el offset según la cantidad de tiempo transcurrida
+    // En cada paso de la animaciï¿½n, movemos el campo de estrellas
+    // modificando el offset segï¿½n la cantidad de tiempo transcurrida
     this.step = function(dt) {
 	offset += dt * speed; // velocidad = espacio / tiempo
 	offset = offset % stars.height;
@@ -119,7 +119,7 @@ var Starfield = function(speed,opacity,numStars,clear) {
 // La clase PlayerShip tambien ofrece la interfaz step(), draw() para
 // poder ser dibujada desde el bucle principal del juego
 var PlayerShip = function() { 
-    var up= false;
+    this.up= false;
 	
 	this.w =  SpriteSheet.map['ship'].w;
     this.h =  SpriteSheet.map['ship'].h;
@@ -145,9 +145,9 @@ var PlayerShip = function() {
 		}
 
 		this.reload-=dt;
-		if(!Game.keys['fire']) up = true;
-		if(up && Game.keys['fire'] && this.reload < 0){
-			up=false;
+		if(!Game.keys['fire']) this.up = true;
+		if(this.up && Game.keys['fire'] && this.reload < 0){
+			this.up=false;
 			this.reload=this.reloadTime;
 		
 		//if(Game.keys['fire'] && this.reload < 0) {
@@ -155,7 +155,7 @@ var PlayerShip = function() {
 		//	Game.keys['fire'] = false;
 		//	this.reload = this.reloadTime;
 
-	    // Se añaden al gameboard 2 misiles 
+	    // Se aï¿½aden al gameboard 2 misiles 
 			this.board.add(new PlayerMissile(this.x,this.y+this.h/2));
 			this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
 		}
@@ -168,7 +168,7 @@ var PlayerShip = function() {
 
 
 // Constructor los misiles.
-// Los metodos de esta clase los añadimos a su prototipo. De esta
+// Los metodos de esta clase los aï¿½adimos a su prototipo. De esta
 // forma solo existe una copia de cada uno para todos los misiles, y
 // no una copia para cada objeto misil
 var PlayerMissile = function(x,y) {
@@ -195,20 +195,20 @@ PlayerMissile.prototype.draw = function(ctx)  {
 // un conjunto de propiedades provenientes de 3 sitios distintos, que
 // se aplican  este orden:
 // 1. baseParameters: variable del constructor con los valores por
-//    omisión para las constantes A..H de las velocidades vx y vy
-// 2. parámetros definidos en la plantilla blueprint que se pasa como
-//    parámetro al crear el enemigo. Pueden modificar las propiedades
+//    omisiï¿½n para las constantes A..H de las velocidades vx y vy
+// 2. parï¿½metros definidos en la plantilla blueprint que se pasa como
+//    parï¿½metro al crear el enemigo. Pueden modificar las propiedades
 //    definidas en 1.
-// 3. parámetros definidos en el parámetro override. Pueden modificar
+// 3. parï¿½metros definidos en el parï¿½metro override. Pueden modificar
 // las propiedades definidas en 1 y 2.
 
-// El código del constructor añade las propiedades en este orden al
+// El cï¿½digo del constructor aï¿½ade las propiedades en este orden al
 // objeto que crea.
 
 // Para definir un nuevo tipo de enemigo: se elige una plantilla
 // existente o se crea una nueva, y se pasan opcionalmente en override
-// valores alternativos para los parámetros de la plantilla o de
-// baseParameters. Ver cómo se añaden 2 enemigos en la función
+// valores alternativos para los parï¿½metros de la plantilla o de
+// baseParameters. Ver cï¿½mo se aï¿½aden 2 enemigos en la funciï¿½n
 // playGame() de este fichero.
 
 var Enemy = function(blueprint,override) {
@@ -216,18 +216,18 @@ var Enemy = function(blueprint,override) {
     var baseParameters =  { A: 0, B: 0, C: 0, D: 0, 
                             E: 0, F: 0, G: 0, H: 0 }
 
-    // Cada instancia tendrá las propiedades definidas en baseParameters
+    // Cada instancia tendrï¿½ las propiedades definidas en baseParameters
     for (var prop in baseParameters) {
 	this[prop] = baseParameters[prop];
     }
 
-    // Se copian los atributos definidos en el parámetro blueprint,
+    // Se copian los atributos definidos en el parï¿½metro blueprint,
     // pudiendo modificar los definidos en baseParameters
     for (prop in blueprint) {
 	this[prop] = blueprint[prop];
     }
 
-    // Se copian los atributos definidos en el parámetro override,
+    // Se copian los atributos definidos en el parï¿½metro override,
     // pudiendo modificar los definidos en baseParameters y en
     // blueprint
     if(override) {
@@ -236,8 +236,8 @@ var Enemy = function(blueprint,override) {
 	}
     }
 
-    // En el parámetro blueprint viene la propiedad sprite, que se ha
-    // añadido más arriba a este objeto. A partir de this.sprite se
+    // En el parï¿½metro blueprint viene la propiedad sprite, que se ha
+    // aï¿½adido mï¿½s arriba a este objeto. A partir de this.sprite se
     // localizan en SpriteSheet.map las dimensiones:
     this.w = SpriteSheet.map[this.sprite].w;
     this.h = SpriteSheet.map[this.sprite].h;
@@ -250,11 +250,11 @@ Enemy.prototype.step = function(dt) {
     // Actualizamos la edad
     this.t += dt;
 
-    // El patrón de movimiento lo dictan las ecuaciones que se utilizarán
+    // El patrï¿½n de movimiento lo dictan las ecuaciones que se utilizarï¿½n
     // para calcular las componentes x e y de su velocidad: vx e vy:
     
     // vx tiene una componente constante A, y otra que va variando
-    // cíclicamente en función de la edad del enemigo (t), según la
+    // cï¿½clicamente en funciï¿½n de la edad del enemigo (t), segï¿½n la
     // sinuisoide definida por las constantes B, C y D.
     // A: componente constante de la velocidad horizontal
     // B: fuerza de la velocidad horizontal sinusoidal
@@ -263,7 +263,7 @@ Enemy.prototype.step = function(dt) {
     this.vx = this.A + this.B * Math.sin(this.C * this.t + this.D);
     
     // vy tiene una componente constante E, y otra que va variando
-    // cíclicamente en función de la edad del enemigo (t), según la
+    // cï¿½clicamente en funciï¿½n de la edad del enemigo (t), segï¿½n la
     // sinuisoide definida por las constantes F, G y H.
     // E: componente constante de la velocidad vertical
     // F: fuerza de la velocidad vertical sinusoidal

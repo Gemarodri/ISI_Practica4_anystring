@@ -1,5 +1,5 @@
 describe("Clase PlayerShip", function(){
-    // Una vez comenzado el juego deberá aparecer la nave del jugador en
+    // Una vez comenzado el juego deberï¿½ aparecer la nave del jugador en
     // la parte inferior
 
     // La nave debera moverse a izquierda y derecha con las teclas de las
@@ -64,7 +64,7 @@ describe("Clase PlayerShip", function(){
 
  	miNave.step(1); // Hacemos como que ha pasado 1 segundo
 	// Tras step, con Game.keys['left'] == false, no debe haberse movido,
-        // por lo que lo comparamos con la posición x inicial de PlayerShip
+        // por lo que lo comparamos con la posiciï¿½n x inicial de PlayerShip
 	expect(miNave.x).toEqual(Game.width/2 - miNave.w / 2);
 
 
@@ -82,8 +82,8 @@ describe("Clase PlayerShip", function(){
 	// Creamos un PlayerShip para testar
 	var miNave = new PlayerShip();
 
-	// Tras el siguiente step debería moverse a la izquierda a
-	// esta posición:
+	// Tras el siguiente step deberï¿½a moverse a la izquierda a
+	// esta posiciï¿½n:
 	function xNueva(dt) {
 	    var vxNueva = -miNave.maxVel;
 	    var xNueva =  miNave.x + vxNueva * dt;
@@ -120,19 +120,20 @@ describe("Clase PlayerShip", function(){
 			add : function () {}
 		};
 		
-    	// Sin pulsar tecla 'fire'
-    	Game = {keys: {'fire': false}};
+		spyOn(Board,'add');
 		shipMissile.board=Board;
-		shipMissile.step(1);	
-
-		// Con la tecla 'fire' pulsada
+		//con la tecla fire pulsada
 		Game = {keys: {'fire': true}};
-		shipMissile.step(1);	
-		expect(shipMissile.reload).toBe(shipMissile.reloadTime);
+		var loopie = function(){
+			for (var i = 0; i<7; i++){	//70msec
+				shipMissile.step(1);
+				waits(10);
+			}
+		};
+		loopie();
+		expect(Board.add.callCount).toBe(2);
 		
-		shipMissile.step(1);	
-		expect(shipMissile.reload).not.toBe(shipMissile.reloadTime);
-		
+
 
 	});
 
