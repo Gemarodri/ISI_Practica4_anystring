@@ -83,8 +83,16 @@ describe("Enemy", function(){
 		}
 		 
 		Game = {width: 320, height: 480};
- 
-		theEnemy = new Enemy({ sprite: 'enemy_purple'});
+		
+		//theEnemy= new Enemy({sprite:'enemy_purple'});
+		theEnemy = new Enemy({ 
+			x: 100, 
+			y: -50, 
+			sprite: 'enemy_purple',
+			B: 100,
+			C: 2 ,
+			E: 100 
+		});
 		
 		spyOn(SpriteSheet, "draw"); 
 		
@@ -95,6 +103,27 @@ describe("Enemy", function(){
 		expect(SpriteSheet.draw.calls[0].args[1]).toEqual('enemy_purple');
 		expect(SpriteSheet.draw.calls[0].args[2]).toEqual(theEnemy.x);
 		expect(SpriteSheet.draw.calls[0].args[3]).toEqual(theEnemy.y);
+	});
+	it("Enemy step", function(){
+		 
+		Game = {width: 320, height: 480};
+ 
+		theEnemy = new Enemy({ 
+			x: 100, 
+			y: -50, 
+			sprite: 'enemy_purple',
+			B: 100,
+			C: 2 ,
+			E: 100 
+		});
+		
+		theEnemy.step(1);
+			 
+			expect(theEnemy.t).toBe(1);	
+			expect(theEnemy.vx).toBe(theEnemy.A + theEnemy.B * Math.sin(theEnemy.C * theEnemy.t + theEnemy.D));
+			expect(theEnemy.vy).toBe(theEnemy.E + theEnemy.F * Math.sin(theEnemy.G * theEnemy.t + theEnemy.H));
+			expect(theEnemy.x).toEqual(100 + theEnemy.vx * 1);
+			expect(theEnemy.y).toBe(-50 + theEnemy.vy * 1);
 	});
 
 });
