@@ -2,10 +2,10 @@
 
 // Requisitos: 
 // 
-// Debe Inicializar el juego
-// Debe Gestionar la entrada para controlar la nave del jugador
-// Debe Ejecutar el bucle de animación
-// Debe Proporcionar un mecanismo para cambiar lo que se muestra en la pantalla.
+// Inicializar el juego
+// Ejecutar el bucle de animación
+// Proporcionar un mecanismo para cambiar lo que se muestra en la pantalla.
+// Gestionar la entrada para controlar la nave del jugador
 
 
 describe("Game singleton", function(){
@@ -109,33 +109,9 @@ describe("Game singleton", function(){
 	});
     });
 
+    it("Game.setBoard", function(){
+	// Piensa como probar setBoard
 
-    it("Game.setBoard()", function(){
-	// this.setBoard = function(num,board) { boards[num] = board;
-	// }; setBoard almacena el board en boards, que es una
-	// variable declarada en el constructor de Game, por lo que no
-	// podemos acceder desde fuera a ella: está en la clausura de
-	// this.setBoard.  Lo que sí podemos hacer es comprobar que se
-	// ha utilizado el board que pasemos a this.setBoard: el bucle
-	// tiene que llamar a sus métodos step() y draw() asi que
-	// hacemos un test para ellos. Creamos un objeto dummy para
-	// board y vemos si llaman a sus métodos step() y draw():
-	var board = {
-	    step: function (){},
-	    draw: function (){}
-	};
-	spyOn(board, "step");
-	spyOn(board, "draw");
-
-	Game.initialize("game",sprites,startGame);	
-	Game.setBoard(1,board);
-	waits(100); // Para que de tiempo a que pasen 30ms al menos y
-		    // Game.loop se ejecute
-
-	runs(function(){
-	    expect(board.step).toHaveBeenCalled();
-	    expect(board.draw).toHaveBeenCalled();
-	});
     });
 
 });

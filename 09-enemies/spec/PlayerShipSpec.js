@@ -107,8 +107,34 @@ describe("Clase PlayerShip", function(){
 
 
     });
+	
+	it("step sin pulsar 'fire' y luego pulsando", function(){
+    	
+		var shipMissile = new PlayerShip();
+		
+		SpriteSheet = {
+  			map : {missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 }}
+		};
+		
+		Board = {
+			add : function () {}
+		};
+		
+    	// Sin pulsar tecla 'fire'
+    	Game = {keys: {'fire': false}};
+		shipMissile.board=Board;
+		shipMissile.step(1);	
 
+		// Con la tecla 'fire' pulsada
+		Game = {keys: {'fire': true}};
+		shipMissile.step(1);	
+		expect(shipMissile.reload).toBe(shipMissile.reloadTime);
+		
+		shipMissile.step(1);	
+		expect(shipMissile.reload).not.toBe(shipMissile.reloadTime);
+		
 
+	});
 
 });
 
