@@ -60,4 +60,41 @@
      propiedades de la plantilla.
 
 */
+describe("Enemy", function(){
+	
+	var canvas, ctx;
 
+    beforeEach(function(){
+		loadFixtures('index.html');
+
+		canvas = $('#game')[0];
+		expect(canvas).toExist();
+
+		ctx = canvas.getContext('2d');
+		expect(ctx).toBeDefined();
+
+    });
+	
+	it("Enemy draw", function(){
+	
+		SpriteSheet = {
+			map: {enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 }},
+			draw : function () {}
+		}
+		 
+		Game = {width: 320, height: 480};
+ 
+		theEnemy = new Enemy({ sprite: 'enemy_purple'});
+		
+		spyOn(SpriteSheet, "draw"); 
+		
+		theEnemy.draw(ctx)
+			 
+		expect(SpriteSheet.draw).toHaveBeenCalled();
+		expect(SpriteSheet.draw.calls[0].args[0]).toEqual(ctx);
+		expect(SpriteSheet.draw.calls[0].args[1]).toEqual('enemy_purple');
+		expect(SpriteSheet.draw.calls[0].args[2]).toEqual(theEnemy.x);
+		expect(SpriteSheet.draw.calls[0].args[3]).toEqual(theEnemy.y);
+	});
+
+});

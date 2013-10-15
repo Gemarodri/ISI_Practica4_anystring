@@ -218,22 +218,22 @@ var Enemy = function(blueprint,override) {
 
     // Cada instancia tendr� las propiedades definidas en baseParameters
     for (var prop in baseParameters) {
-	this[prop] = baseParameters[prop];
+		this[prop] = baseParameters[prop];
     }
 
     // Se copian los atributos definidos en el par�metro blueprint,
     // pudiendo modificar los definidos en baseParameters
     for (prop in blueprint) {
-	this[prop] = blueprint[prop];
+		this[prop] = blueprint[prop];
     }
 
     // Se copian los atributos definidos en el par�metro override,
     // pudiendo modificar los definidos en baseParameters y en
     // blueprint
     if(override) {
-	for (prop in override) {
-	    this[prop] = override[prop];
-	}
+		for (prop in override) {
+			this[prop] = override[prop];
+		}
     }
 
     // En el par�metro blueprint viene la propiedad sprite, que se ha
@@ -277,8 +277,8 @@ Enemy.prototype.step = function(dt) {
     if(this.y > Game.height ||
        this.x < -this.w||
        this.x > Game.width) {
-	this.board.remove(this);
-    }
+			this.board.remove(this);
+	   }
 }
 
 // Metodo draw, que anadimos al prototipo para que cada instancia de
