@@ -237,7 +237,7 @@ var FireBall = function(x,y,type,dir){
 };
 
 FireBall.prototype.step = function(dt)  {
-	this.vy += 20
+	this.vy += 20;
     this.y += this.vy*dt
     this.x  += this.vx*dt;
     if(this.y < -this.h) {this.board.remove(this); }

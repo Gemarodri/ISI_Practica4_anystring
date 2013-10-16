@@ -203,12 +203,6 @@ PlayerMissile.prototype.step = function(dt)  {
 var FireBall = function(x,y,type,dir){
 	this.firecase='fireball_'+String(type+1);
 	this.setup(this.firecase,{dir_l:dir, frame: 2+type*2, vx: dir?-30:30, vy:-650});
-	//this.dir_l= dir;
-	//this.frame=1+type*3;
-    //this.vx = dir ? -30 : 30;
-	//this.w = SpriteSheet.map[this.firecase].w;
-	//this.h = SpriteSheet.map[this.firecase].h;
-	//this.vy= -650;
 	this.x = x - this.w/2;
 	this.y = y-this.h;	
 	
