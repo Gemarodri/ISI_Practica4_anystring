@@ -167,8 +167,24 @@ var PlayerShip = function() {
 			this.up=false;
 			this.reload2=this.reloadTime2;
 			this.board.add(new FireBall(this.x+this.w/2,this.y+this.h,1));
-			//setTimeout(this.board.add(new FireBall(this.x+this.w/2,this.y+this.h,2)),30);
-			//setTimeout(this.board.add(new FireBall(this.x+this.w/2,this.y+this.h,3)),60);
+			
+			var b=this.board;
+			var x = this.x;
+			var y = this.y;
+			var h = this.h;
+			var w = this.w;
+			var n = 0;
+			function callee(board,n,x,y,w,h){
+				board.add(new FireBall(x+w/2,y+h,n));
+			}
+			var caller = function(){
+				n+=1;
+				callee(b,n,x,y,w,h);
+				
+			};
+			setTimeout(caller,60);
+			setTimeout(caller,120);
+			setTimeout(caller,180);
 		}
     };
 
@@ -189,25 +205,24 @@ var PlayerMissile = function(x,y) {
 
     this.y = y - this.h; 
     this.vy = -700;
-};
 
-PlayerMissile.prototype.step = function(dt)  {
-    this.y += this.vy * dt;
-    if(this.y < -this.h) { this.board.remove(this); }
-};
+	this.step = function(dt)  {
+	    this.y += this.vy * dt;
+	    if(this.y < -this.h) { this.board.remove(this); }
+	};
 
-PlayerMissile.prototype.draw = function(ctx)  {
-    SpriteSheet.draw(ctx,'missile',this.x,this.y);
+	this.draw = function(ctx)  {
+	    SpriteSheet.draw(ctx,'missile',this.x,this.y);
+	};
 };
-
 
 //Contructor para la bola de fuego
 //Los metodos de esta clase los a�adimos a su prototipo. De esta
 //forma solo existe una copia de cada uno para todos los misiles, y
 //no una copia para cada objeto misil
 var FireBall = function(x,y,type){
-	this.firecase='fireball_'+String(type);
-	this.frame=type;
+	this.firecase='fireball_'+String(type+1);
+	this.frame=1+type*3;
 	this.w = SpriteSheet.map[this.firecase].w;
 	this.h = SpriteSheet.map[this.firecase].h;
 	this.x = x - this.w/2;
@@ -221,7 +236,8 @@ FireBall.prototype.step = function(dt)  {
 };
 
 FireBall.prototype.draw = function(ctx)  {
-    SpriteSheet.draw(ctx,this.firecase,this.x,this.y);
+	console.log(this.frame);
+    SpriteSheet.draw(ctx,this.firecase,this.x,this.y,this.frame);
 };
 
 
