@@ -85,7 +85,7 @@ describe("Enemy", function(){
 		Game = {width: 320, height: 480};
 		
 		//theEnemy= new Enemy({sprite:'enemy_purple'});
-		theEnemy = new Enemy({ 
+		var theEnemy = new Enemy({ 
 			x: 100, 
 			y: -50, 
 			sprite: 'enemy_purple',
