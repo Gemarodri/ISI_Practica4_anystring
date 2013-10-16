@@ -101,7 +101,7 @@ var Starfield = function(speed,opacity,numStars,clear) {
 			  stars.width, intOffset);
 	}
 
-	// Dibujar sobre el contexto ctx la parte inferior del canvas con
+	// Dibujar sobre el contexto ctxt la parte inferior del canvas con
 	// las estrellas
 	if(remaining > 0) {
 	    ctx.drawImage(stars,
@@ -111,7 +111,7 @@ var Starfield = function(speed,opacity,numStars,clear) {
 			  stars.width, remaining);
 	}
     }
-
+    console.log(this.dir_l ? "left" : "rigth");
     // En cada paso de la animaci�n, movemos el campo de estrellas
     // modificando el offset seg�n la cantidad de tiempo transcurrida
     this.step = function(dt) {
@@ -164,18 +164,18 @@ var PlayerShip = function() {
 			this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
 		}
 		
-		if (this.up && (Game.keys['fireball_left'] || Game.keys['fireballs_right']) && this.reload2<0){
-			this.dir_l = Game.keys['fireball_left']		//if true goes to left, otherwise goes to right
+		if (this.up && (Game.keys['fireball_l'] || Game.keys['fireball_r']) && this.reload2<0){
+			this.dir_l = Game.keys['fireball_l']		//if true goes to left, otherwise goes to right
 			this.up=false;
 			this.reload2=this.reloadTime2;
-			this.board.add(new FireBall(this.x+this.w/2,this.y+this.h,0,d));
+			this.board.add(new FireBall(this.x+this.w/2,this.y+this.h,0,this.dir_l));
 			
 			var b=this.board;
 			var x = this.x;
 			var y = this.y;
 			var h = this.h;
 			var w = this.w;
-			var d = this.d;
+			var d = this.dir_l;
 			var n = 0;
 			function callee(board,n,x,y,w,h,d){
 				board.add(new FireBall(x+w/2,y+h,n,d));
@@ -227,16 +227,19 @@ var FireBall = function(x,y,type,dir){
 	this.dir_l= dir;
 	this.firecase='fireball_'+String(type+1);
 	this.frame=1+type*3;
-	console.log(this.dir_l ? "left" : "rigth");
+    this.vx = dir ? -30 : 30;
+    this.vy = -300;
 	this.w = SpriteSheet.map[this.firecase].w;
 	this.h = SpriteSheet.map[this.firecase].h;
 	this.x = x - this.w/2;
 	this.y = y-this.h;	
-	this.vy= -300;
+	this.vy= -650;
 };
 
 FireBall.prototype.step = function(dt)  {
-    this.y += this.vy * dt;
+	this.vy += 20
+    this.y += this.vy*dt
+    this.x  += this.vx*dt;
     if(this.y < -this.h) {this.board.remove(this); }
 };
 
