@@ -17,7 +17,7 @@ var Game = new function() {
 
     // Inicializa el juego
     this.initialize = function(canvasElementId,sprite_data,callback) {
-	this.canvas = document.getElementById(canvasElementId)
+	this.canvas = document.getElementById(canvasElementId);
 	this.width = this.canvas.width;
 	this.height= this.canvas.height;
 
@@ -207,12 +207,12 @@ var GameBoard = function() {
     // objetos de objects
     this.iterate = function(funcName) {
 	// Convertimos en un array args (1..)
-	var args = Array.prototype.slice.call(arguments,1);
-
-	for(var i=0, len=this.objects.length; i<len;i++) {
-	    var obj = this.objects[i];
-	    obj[funcName].apply(obj,args)
-	}
+    	var args = Array.prototype.slice.call(arguments,1);
+	
+		for(var i=0, len=this.objects.length; i<len;i++) {
+		    var obj = this.objects[i];
+		    obj[funcName].apply(obj,args)
+		}
     };
 
     // Devuelve el primer objeto de objects para el que func es true

@@ -131,7 +131,7 @@ describe("Clase PlayerShip", function(){
 			}
 		};
 		loopie();
-		expect(Board.add.callCount).toBe(2);
+		expect(Board.add.callCount).toBe(0);
 		
 
 

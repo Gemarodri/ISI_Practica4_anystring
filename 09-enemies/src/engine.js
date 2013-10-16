@@ -1,18 +1,18 @@
 // Alien Invasion utiliza duck typing para implementar como dibujar
-// elementos en la pantalla (método draw()) y para que actualicen su
-// estado cada vez que el bucle de animación marca un nuevo paso
-// (método step()).
+// elementos en la pantalla (mï¿½todo draw()) y para que actualicen su
+// estado cada vez que el bucle de animaciï¿½n marca un nuevo paso
+// (mï¿½todo step()).
 //
-// Estos dos métodos son implementados por: las pantallas iniciales y
+// Estos dos mï¿½todos son implementados por: las pantallas iniciales y
 // final del juego, los sprites que se muestran en la pantalla
 // (jugador, enemigo, proyectiles, y los elementos como el marcador de
-// puntuación o el número de vidas.
+// puntuaciï¿½n o el nï¿½mero de vidas.
 
 
 
 
 // Objeto singleton Game: se guarda una unica instancia del
-// constructor anónimo en el objeto Game
+// constructor anï¿½nimo en el objeto Game
 var Game = new function() {                                                                  
 
     // Inicializa el juego
@@ -31,8 +31,8 @@ var Game = new function() {
 	SpriteSheet.load (sprite_data,callback);
     };
 
-    // Gestión de la entrada (teclas para izda/derecha y disparo)
-    var KEY_CODES = { 37:'left', 39:'right', 32 :'fire' };
+    // Gestiï¿½n de la entrada (teclas para izda/derecha y disparo)
+    var KEY_CODES = { 37:'left', 39:'right', 32 :'fire', 66:'fireball_l', 78:'fireball_r' };
     this.keys = {};
 
     this.setupInput = function() {
@@ -44,7 +44,7 @@ var Game = new function() {
 	});
 	
 	$(window).keyup(function(event){
-	    if (KEY_CODES[event.which]) {
+	    if (KEY_CODES[event.which]) {	
 		Game.keys[KEY_CODES[event.which]] = false;
 		return false;
 	    }
@@ -61,7 +61,7 @@ var Game = new function() {
 	var dt = 30 / 1000;
 
 	// Para cada board, de 0 en adelante, se 
-	// llama a su método step() y luego a draw()
+	// llama a su mï¿½todo step() y luego a draw()
 	for(var i=0,len = boards.length;i<len;i++) {
 	    if(boards[i]) { 
 		boards[i].step(dt);
@@ -82,16 +82,16 @@ var Game = new function() {
 
 
 // Objeto singleton SpriteSheet: se guarda una unica instancia del
-// constructor anónimo en el objeto SpriteSheet
+// constructor anï¿½nimo en el objeto SpriteSheet
 var SpriteSheet = new function() {
 
-    // Almacena nombre_de_sprite: rectángulo para que sea mas facil
+    // Almacena nombre_de_sprite: rectï¿½ngulo para que sea mas facil
     // gestionar los sprites del fichero images/sprite.png
     this.map = { }; 
 
     // Para cargar hoja de sprites. 
     //
-    // Parámetros: spriteData: parejas con nombre de sprite, rectángulo
+    // Parï¿½metros: spriteData: parejas con nombre de sprite, rectï¿½ngulo
     // callback: para llamarla cuando se haya cargado la hoja de
     // sprites
     this.load = function(spriteData,callback) { 
@@ -104,7 +104,7 @@ var SpriteSheet = new function() {
     
     // Para dibujar sprites individuales en el contexto de canvas ctx
     //
-    // Parámetros: contexto, string con nombre de sprite para buscar
+    // Parï¿½metros: contexto, string con nombre de sprite para buscar
     //  en this.map, x e y en las que dibujarlo, y opcionalmente,
     //  frame para seleccionar el frame de un sprite que tenga varios
     //  como la explosion
@@ -157,7 +157,7 @@ var TitleScreen = function TitleScreen(title,subtitle,callback) {
 
 
 // GameBoard implementa un tablero de juego que gestiona la
-// interacción entre los elementos del juego sobre el que se disponen
+// interacciï¿½n entre los elementos del juego sobre el que se disponen
 // los elementos del juego (fichas, cartas, naves, proyectiles, etc.)
 
 // La clase GameBoard ofrece la interfaz step(), draw() para que sus
@@ -166,25 +166,25 @@ var TitleScreen = function TitleScreen(title,subtitle,callback) {
 var GameBoard = function() {
     var board = this;
 
-    // Colección de objetos contenidos por este tablero
+    // Colecciï¿½n de objetos contenidos por este tablero
     this.objects = [];
 
-    // Añade obj a objects
-    this.add = function(obj) { 
-	obj.board=this;  // Para que obj pueda referenciar el tablero
-	this.objects.push(obj); 
-	return obj; 
+    // Aï¿½ade obj a objects
+    this.add = function(obj) {
+		obj.board=this;  // Para que obj pueda referenciar el tablero
+		this.objects.push(obj); 
+		return obj; 
     };
 
-    // Los siguientes 3 métodos gestionan el borrado.  Cuando un board
-    // está siendo recorrido (en step()) podría eliminarse algún
-    // objeto, lo que interferiría en el recorrido. Por ello borrar se
+    // Los siguientes 3 mï¿½todos gestionan el borrado.  Cuando un board
+    // estï¿½ siendo recorrido (en step()) podrï¿½a eliminarse algï¿½n
+    // objeto, lo que interferirï¿½a en el recorrido. Por ello borrar se
     // hace en dos fases: marcado, y una vez terminado el recorrido,
     // se modifica objects.
 
     // Marcar un objeto para borrar
     this.remove = function(obj) { 
-	this.removed.push(obj); 
+    	this.removed.push(obj); 
     };
 
     // Inicializar la lista de objetos pendientes de ser borrados
@@ -193,17 +193,17 @@ var GameBoard = function() {
     // Elimina de objects los objetos pendientes de ser borrados
     this.finalizeRemoved = function() {
 	for(var i=0, len=this.removed.length; i<len;i++) {
-	    // Buscamos qué índice tiene en objects[] el objeto i de
+	    // Buscamos quï¿½ ï¿½ndice tiene en objects[] el objeto i de
 	    // removed[]
 	    var idx = this.objects.indexOf(this.removed[i]);
 
-	    // splice elimina de objects el objeto en la posición idx
-	    if(idx != -1) this.objects.splice(idx,1); 
+	    // splice elimina de objects el objeto en la posiciï¿½n idx
+	    if(idx != -1) this.objects.splice(idx,1);
 	}
     }
 
 
-    // Iterador que aplica el método funcName a todos los
+    // Iterador que aplica el mï¿½todo funcName a todos los
     // objetos de objects
     this.iterate = function(funcName) {
 	// Convertimos en un array args (1..)
@@ -223,9 +223,9 @@ var GameBoard = function() {
 	return false;
     };
 
-    // Cuando Game.loop() llame a step(), hay que llamar al método
+    // Cuando Game.loop() llame a step(), hay que llamar al mï¿½todo
     // step() de todos los objetos contenidos en el tablero.  Antes se
-    // inicializa la lista de objetos pendientes de borrar, y después
+    // inicializa la lista de objetos pendientes de borrar, y despuï¿½s
     // se borran los que hayan aparecido en dicha lista
     this.step = function(dt) { 
 	this.resetRemoved();
@@ -233,13 +233,13 @@ var GameBoard = function() {
 	this.finalizeRemoved();
     };
 
-    // Cuando Game.loop() llame a draw(), hay que llamar al método
+    // Cuando Game.loop() llame a draw(), hay que llamar al mï¿½todo
     // draw() de todos los objetos contenidos en el tablero
     this.draw= function(ctx) {
 	this.iterate('draw',ctx);
     };
 
-    // Comprobar si hay intersección entre los rectángulos que
+    // Comprobar si hay intersecciï¿½n entre los rectï¿½ngulos que
     // circunscriben a los objetos o1 y o2
     this.overlap = function(o1,o2) {
 	// return !((o1 encima de o2)    || (o1 debajo de o2)   ||
