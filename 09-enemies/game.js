@@ -234,20 +234,20 @@ var FireBall = function(x,y,type,dir){
 	this.x = x - this.w/2;
 	this.y = y-this.h;	
 	this.vy= -650;
-};
 
-FireBall.prototype.step = function(dt)  {
-	this.vy += 20
-    this.y += this.vy*dt
-    this.x  += this.vx*dt;
-    if(this.y < -this.h) {this.board.remove(this); }
-};
 
-FireBall.prototype.draw = function(ctx)  {
-	//console.log(this.frame);
-    SpriteSheet.draw(ctx,this.firecase,this.x,this.y,this.frame);
-};
+	this.step = function(dt)  {
+		this.vy += 20
+	    this.y += this.vy*dt
+	    this.x  += this.vx*dt;
+	    if(this.y < -this.h) {this.board.remove(this); }
+	};
 
+	this.draw = function(ctx)  {
+		//console.log(this.frame);
+	    SpriteSheet.draw(ctx,this.firecase,this.x,this.y,this.frame);
+	};
+};
 
 
 // Constructor para las naves enemigas. Un enemigo se define mediante
