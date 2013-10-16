@@ -1,1 +1,1 @@
-/home/al-13-14/gemarodri/Escritorio/ISI_Practica4/09-enemies/src/game.js
+./src/game.js
