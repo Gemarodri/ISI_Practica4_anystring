@@ -227,20 +227,11 @@ var FireBall = function(x,y,type,dir){
 	this.firecase='fireball_'+String(type+1);
 	this.frame=1+type*3;
     	this.vx = dir ? -30 : 30;
-    	this.vy = -300;
 	this.w = SpriteSheet.map[this.firecase].w;
 	this.h = SpriteSheet.map[this.firecase].h;
 	this.x = x - this.w/2;
 	this.y = y-this.h;	
 	this.vy= -650;
-
-FireBall.prototype.step = function(dt)  {
-	this.vy += 20;
-    this.y += this.vy*dt
-    this.x  += this.vx*dt;
-    if(this.y < -this.h) {this.board.remove(this); }
-};
-
 
 	this.step = function(dt)  {
 		this.vy += 20
