@@ -1,0 +1,173 @@
+¿Cómo usar este material?:
+
+- Ejecuta el juego finalizado: http://cykod.github.io/AlienInvasion/
+
+- Para cada prototipo, primero leemos los tests, y los interpretamos
+  como especificaciones de los requisitos del prototipo
+
+- Después leemos el código y ejecutamos el prototipo: firefox
+  index.html
+  
+- Luego comprobamos si pasan los tests: firefox SpecRunner.html
+
+- Finalmente, realizamos cambios a los tests / código según requieran
+  los ejercicios
+
+
+
+
+En este prototipo no se añade nueva funcionalidad respecto a la
+existente el prototipo 09-enemies.
+
+Hay cuatro constructores/clases en el prototipo 09-enemies que se
+parecen mucho: PlayerShip, PlayerMissile, Enemy, y FireBall. Ha
+llegado el momento de refactorizar el código para que NO se haga lo
+mismo, o casi lo mismo, en 4 sitios distintos, de forma que se
+reduzcan las duplicidades en el código. De esta forma el código será
+más fácil de mantener, modificar y extender.
+
+El código de creación de objetos de esas 4 clases, y sus métodos
+draw(), son candidatos evidentes a ser refactorizados, pues tienen
+mucho en común en las 4 clases. Crearemos un constructor/clase Sprite
+que contenga este código común. Los objetos creados mediante
+PlayerShip(), PlayerMissile(), Enemy() y FireBall() tendrán como
+prototipo (heredarán de) el prototipo del constructor Sprite().
+
+Por otro lado, los 3 bucles para inicializar las propiedades en el
+constructor Enemy hacen lo mismo: añadir propiedades. Crearemos un
+método merge() para realizar esta tarea.
+
+
+EJERCICIOS
+
+
+1. Estudia la implementación en la que se han refactorizado las
+   implementaciones de PlayerShip, PlayerMissile y Enemy: en el
+   fichero engine.js se ha añadido el constructor Sprite. Lo añadimos
+   a engine.js y no a game.js porque es código que puede servirnos
+   para otros juegos. Mantenemos en game.js el código específico del
+   juego Alien Invasion.
+
+   El constructor está vacío pues cada clase que utilice como
+   prototipo a un objeto Sprite tendrá una inicialización
+   distinta. Para inicializar un objeto Sprite utilizaremos su método
+   setup(), que se llamará explícitamente desde cada objeto que
+   utilice como prototipo a un objeto Sprite.
+
+   El método setup() recibe como parámetros el sprite y las
+   propiedades. Para copiar las propiedades se ha definido el método
+   merge().
+
+   Una vez definido el constructor Sprite se han modificado en game.js
+   los constructores PlayerShip, PlayerMissile y Enemy para que usen
+   setup() para inicializar sus instancias, y para que usen un objeto
+   Sprite como su prototipo (es decir, que hereden de un objeto
+   prototípico Sprite).
+
+   a) Refactorización de PlayerShip:
+
+      Se pone como prototipo de PlayerShip a Sprite (justo después de
+      la definición del constructor)
+
+      Se modifica el constructor para que haga uso del método setup()
+      heredado de Sprite. Una vez que se ha llamado a setup() el
+      objeto que se está construyendo tiene las propiedades w y h, que
+      pueden entonces usarse para inicilizar la posición x e y.
+
+      Por último, se elimina el método draw(), que ahora se hereda del
+      objeto Sprite.
+
+
+   b) Refactorización de PlayerMissile
+
+      Se pone como prototipo de PlayerMissile a Sprite (justo después
+      de la definición del constructor)
+
+      Se modifica el constructor para que haga uso del método setup()
+      heredado de Sprite. Una vez que se ha llamado a setup() el
+      objeto que se está construyendo tiene las propiedades w y h, que
+      pueden entonces usarse para inicilizar la posición x e y.
+
+      Por último, se elimina el método draw(), que ahora se hereda del
+      objeto Sprite.
+
+
+   c) Refactorización de Enemy
+
+      Se pone como prototipo de Enemy a Sprite (justo después de la
+      definición del constructor)
+
+      En el constructor de Enemy aprovechamos el nuevo método Sprite
+      que sirve para copiar propiedades. Lo usamos para copiar las
+      propiedades de baseParameters, luego las de la plantilla
+      blueprint que se pasa como parámetro del constructor y
+      finalmente las del parámetro override.
+
+      El método step() no cambia, y el método draw() se elimina al
+      reutilizarse el del prototipo Sprite.
+
+      Un cambio adicional, para ahorrar algo de memoria, es que la
+      variable baseParameters que en la versión anterior de Enemy se
+      declaraba como una variable, se ha convertido ahora en una
+      propiedad del prototipo, para de esta forma ahorrar
+      memoria. Además, la variable con la edad se pasa también a
+      baseParameters en el prototipo, con valor 0.
+
+
+2. Escribe en un nuevo fichero SpriteSpec.js pruebas unitarias para
+   los objetos construidos con Sprite()
+
+
+3. Realiza la refactorización de la clase que implementaste en el
+   prototipo anterior para la bola de fuego, de manera similar a cómo
+   se han refactorizado PlayerShip(), PlayerMissile() y Enemy().
+
+
+4. Comprueba que todos los tests del prototipo 09-enemies siguen
+   pasando en este prototipo. 
+
+   En este prototipo se ha realizado una refactorización del código de
+   3 clases, y tú has tenido que realizar la refactorización de la
+   clase FireBall en el apartado anterior.  Sin embargo, no has
+   añadido funcionalidad nueva, por lo que todos los tests del
+   prototipo 09-enemies deberían seguir pasándose, si estaban bien
+   realizados.
+
+   En caso de que algún test no pase ahora tras la refactorización,
+   modifícalo para que no dependa del código del prototipo
+   09-enemies. Tu objetivo sería que el nuevo test pase tanto en este
+   prototipo 10-refactor como en 09-enemies, pues al no haberse
+   alterado la especificación de lo que deben hacer las 4 clases
+   refactorizadas, el mismo test debería valer para ambas
+   implementaciones.
+
+
+5. Fíjate en este detalle: en los prototipos anteriores a veces has
+   tenido que realizar tests que podrían parecer poco importantes o
+   superfluos debido a lo escueto que era el código que testaban. Por
+   ejemplo, el test de los métodos draw() de las clases
+   refactorizadas, que no hacía más que llamar a
+   SpriteSheet.draw(). Sin embargo, tener esos tests ayuda a que en
+   momentos en los que se refactoriza el código, como ocurre en este
+   prototipo, tengamos una red de seguridad que nos garantice que los
+   cambios introducidos no estropean la funcionalidad que ya teníamos
+   implementada.
+
+   Fíjate por ejemplo en el método draw() de PlayerMissile. Antes de
+   la refactorización el método draw() estaba en el prototipo de
+   PlayerMissile, pero tras la refactorización se ha subido a Sprite,
+   heredándose en PlayerMissile. Además, ahora Sprite.draw() no le
+   pasa 'missile' como segundo parámetro a la llamada a
+   SpriteSheet.draw, pues Sprite.draw() ahora no sólo se utiliza para
+   PlayerMissile. Ahora Sprite.draw() recupera de this.sprite el
+   string 'missile', o el que corresponda.
+
+   Si el test de PlayerMissile.draw() estaba bien diseñado, seguirá
+   pasando ahora. Pero si hubiéramos cometido algún error en la
+   refactorización, el test no pasaría, y nos ayudaría a detectar el
+   error. Estos tests antiguos que seguimos corriendo en las
+   evoluciones del código son **tests de regresión** que nos sirven de
+   red de seguridad para no introducir errores cuando refactorizamos
+   el código, como hemos hecho en este prototipo.
+
+

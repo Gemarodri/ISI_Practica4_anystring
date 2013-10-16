@@ -1,0 +1,93 @@
+¿Cómo usar este material?:
+
+- Ejecuta el juego finalizado: http://cykod.github.io/AlienInvasion/
+
+- Para cada prototipo, primero leemos los tests, y los interpretamos
+  como especificaciones de los requisitos del prototipo
+
+- Después leemos el código y ejecutamos el prototipo: firefox
+  index.html
+  
+- Luego comprobamos si pasan los tests: firefox SpecRunner.html
+
+- Finalmente, realizamos cambios a los tests / código según requieran
+  los ejercicios
+
+
+
+EJERCICIOS
+
+
+1. Comprueba que todos los tests del prototipo 08 siguen pasando en
+   este prototipo, incluyendo los que has tenido que añadir al hacer
+   los ejercicios de los prototipos 07 y 08
+
+
+2. Consulta la especificación de este prototipo en el fichero
+   spec/EnemySpec.js
+
+
+3. Estudia la implementación: 
+
+   En el fichero game.js se ha añadido a la variable sprites la
+   definición de los sprites enemy_purple, enemy_bee, enemy_ship y
+   enemy_circle.
+
+   Además se ha añadido a game.js la variable enemies, que contiene
+   una plantilla basic para definir las propiedades de un tipo de
+   enemigo. 
+
+   En la función playGame() se han añadido al tablero de juego dos
+   enemigos, creados llamando al constructor Enemy().
+
+   Por último, se ha añadido al fichero game.js la definición del
+   constructor Enemy(), creando sus métodos step() y draw() en el
+   prototipo en lugar de añadirlos como funciones a cada objeto creado
+   con el constructor.
+
+
+4. Comprueba cómo variando las constantes A..H se obtienen diversos
+   comportamientos. 
+
+   Por ejemplo:
+
+   - si B y F son 0, el enemigo se desplaza en línea recta.
+
+   - si F y A son 0, el enemigo vuela con velocidad y constante, pero
+     va moviéndose de izquierda a derecha
+
+
+5. Escribe en el fichero spec/EnemySpec.js pruebas unitarias para los
+   objetos creados con el constructor Enemy().
+
+
+6. Definimos un nuevo requisito que tienes que satisfacer modificando
+   la implementación del prototipo que te proporcionamos: la nave del
+   usuario deberá poder disparar "bolas de fuego" cuando se pulse la
+   tecla 'b' o la tecla 'n'. Crea una nueva clase FireBall que utilice
+   como sprite alguno de los frames de la explosión, pero con un
+   tamaño más reducido, para representar la bola de fuego.
+
+   Cada vez que se pulse la tecla 'b' se disparará una bola de fuego,
+   que deberá seguir una trayectoria parabólica hacia la izquierda,
+   elevándose primero y cayendo después.
+
+   Cada vez que se pulse la tecla 'n' se disparará una nueva bola de
+   fuego, que deberá seguir una trayectoria parabólica hacia la
+   derecha, elevándose y cayendo después.
+   
+   En prototipos posteriores definiremos cómo afecta la bola de fuego
+   a las naves enemigas. En este prototipo la bola de fuego desaparece
+   por abajo sin interaccionar con las naves enemigas ni con la nave
+   del usuario.
+
+
+7. Añade a un nuevo fichero spec/FireBallSpec.js tests unitarios para
+   comprobar el funcionamiento de las bolas de fuego. 
+
+
+
+
+
+
+
