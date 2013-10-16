@@ -32,7 +32,7 @@ var Game = new function() {
     };
 
     // Gesti�n de la entrada (teclas para izda/derecha y disparo)
-    var KEY_CODES = { 37:'left', 39:'right', 32 :'fire', 98:'fireball', 110:'fireball' };
+    var KEY_CODES = { 37:'left', 39:'right', 32 :'fire', 66:'fireball', 78:'fireball' };
     this.keys = {};
 
     this.setupInput = function() {
@@ -44,7 +44,7 @@ var Game = new function() {
 	});
 	
 	$(window).keyup(function(event){
-	    if (KEY_CODES[event.which]) {
+	    if (KEY_CODES[event.which]) {	
 		Game.keys[KEY_CODES[event.which]] = false;
 		return false;
 	    }
@@ -165,15 +165,12 @@ var TitleScreen = function TitleScreen(title,subtitle,callback) {
 
 var GameBoard = function() {
     var board = this;
-    var time1;
-    var time2;
 
     // Colecci�n de objetos contenidos por este tablero
     this.objects = [];
 
     // A�ade obj a objects
     this.add = function(obj) {
-    	time1 = new Date().getTime() / 1000;
 		obj.board=this;  // Para que obj pueda referenciar el tablero
 		this.objects.push(obj); 
 		return obj; 
@@ -202,9 +199,6 @@ var GameBoard = function() {
 
 	    // splice elimina de objects el objeto en la posici�n idx
 	    if(idx != -1) this.objects.splice(idx,1);
-	    time2 = new Date().getTime() / 1000;
-	    console.log(time2-time1);
-	    console.log(this.objects.length)
 	}
     }
 

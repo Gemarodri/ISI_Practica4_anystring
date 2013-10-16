@@ -2,7 +2,9 @@ var sprites = {
     ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 },
     missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
     explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 1 },
-    fireball: { sx: 0, sy: 64, w: 64, h: 64, frames: 1 },
+    fireball_1: { sx: 0, sy: 64, w: 64, h: 64, frames: 1 },
+    fireball_2: { sx: 0, sy: 64, w: 64, h: 64, frames: 3 },
+    fireball_3: { sx: 0, sy: 64, w: 64, h: 64, frames: 5 },
     enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
     enemy_bee: { sx: 79, sy: 0, w: 37, h: 43, frames: 1 },
     enemy_ship: { sx: 116, sy: 0, w: 42, h: 43, frames: 1 },
@@ -130,7 +132,7 @@ var PlayerShip = function() {
     this.vx = 0;
 
     this.reloadTime = 0.25;  // Un cuarto de segundo para poder volver a disparar
-    this.reloadTime2 = 1 	 //Un segundo para disparar la bola de fuego otra vez
+    this.reloadTime2 = 1; 	 //Un segundo para disparar la bola de fuego otra vez
     this.reload = this.reloadTime;
     this.reload2= this.reloadTime2;
 
@@ -145,37 +147,35 @@ var PlayerShip = function() {
 
 		if(this.x < 0) { this.x = 0; }
 		else if(this.x > Game.width - this.w) { 
-			this.x = Game.width - this.w 
+			this.x = Game.width - this.w;
 		}
 
 		this.reload-=dt;
 		this.reload2-=dt;
+		
 		if(!Game.keys['fire']) this.up = true;
+		
 		if(this.up && Game.keys['fire'] && this.reload < 0){
 			this.up=false;
 			this.reload=this.reloadTime;
-		
-		//if(Game.keys['fire'] && this.reload < 0) {
-	    // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
-		//	Game.keys['fire'] = false;
-		//	this.reload = this.reloadTime;
-
-	    // Se a�aden al gameboard 2 misiles 
+			// Se a�aden al gameboard 2 misiles 
 			this.board.add(new PlayerMissile(this.x,this.y+this.h/2));
 			this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
 		}
+		
 		if (this.up && Game.keys['fireball'] && this.reload2<0){
 			this.up=false;
 			this.reload2=this.reloadTime2;
-			this.board.add(new FireBall(this.x+this.w/2,this.y+this.h/2))
-			//setTimeout para la estela de la bola de fuego
+			this.board.add(new FireBall(this.x+this.w/2,this.y+this.h,1));
+			//setTimeout(this.board.add(new FireBall(this.x+this.w/2,this.y+this.h,2)),30);
+			//setTimeout(this.board.add(new FireBall(this.x+this.w/2,this.y+this.h,3)),60);
 		}
-    }
+    };
 
     this.draw = function(ctx) {
 	SpriteSheet.draw(ctx,'ship',this.x,this.y,0);
     }
-}
+};
 
 
 // Constructor los misiles.
@@ -205,20 +205,23 @@ PlayerMissile.prototype.draw = function(ctx)  {
 //Los metodos de esta clase los a�adimos a su prototipo. De esta
 //forma solo existe una copia de cada uno para todos los misiles, y
 //no una copia para cada objeto misil
-var FireBall = function(x,y){
-	this.w = SpriteSheet.map['fireball'].w;
-	this.h = SpriteSheet.map['fireball'].h;
-	
+var FireBall = function(x,y,type){
+	this.firecase='fireball_'+String(type);
+	this.frame=type;
+	this.w = SpriteSheet.map[this.firecase].w;
+	this.h = SpriteSheet.map[this.firecase].h;
+	this.x = x - this.w/2;
+	this.y = y-this.h;	
 	this.vy= -300;
 };
 
 FireBall.prototype.step = function(dt)  {
     this.y += this.vy * dt;
-    if(this.y < -this.h) { this.board.remove(this); }
+    if(this.y < -this.h) {this.board.remove(this); }
 };
 
 FireBall.prototype.draw = function(ctx)  {
-    SpriteSheet.draw(ctx,'fireball',this.x,this.y);
+    SpriteSheet.draw(ctx,this.firecase,this.x,this.y);
 };
 
 
