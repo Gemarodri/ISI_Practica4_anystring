@@ -148,7 +148,7 @@ var PlayerShip = function() {
 			this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
 		}
 		
-		if (this.up && (Game.keys['fireball_l'] || Game.keys['fireball_r']) && this.reload2<0){
+		if (this.up && this.reload2<0 && (Game.keys['fireball_l'] || Game.keys['fireball_r']) ){
 			this.dir_l = Game.keys['fireball_l'];		//if true goes to left, otherwise goes to right
 			this.up=false;
 			this.reload2=this.reloadTime2;
