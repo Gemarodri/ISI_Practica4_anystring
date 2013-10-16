@@ -5,6 +5,7 @@ var sprites = {
     fireball_1: { sx: 0, sy: 64, w: 64, h: 64, frames: 1 },
     fireball_2: { sx: 0, sy: 64, w: 64, h: 64, frames: 3 },
     fireball_3: { sx: 0, sy: 64, w: 64, h: 64, frames: 5 },
+    fireball_4: { sx: 0, sy: 64, w: 64, h: 64, frames: 7 },
     enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
     enemy_bee: { sx: 79, sy: 0, w: 37, h: 43, frames: 1 },
     enemy_ship: { sx: 116, sy: 0, w: 42, h: 43, frames: 1 },
@@ -166,7 +167,7 @@ var PlayerShip = function() {
 		if (this.up && Game.keys['fireball'] && this.reload2<0){
 			this.up=false;
 			this.reload2=this.reloadTime2;
-			this.board.add(new FireBall(this.x+this.w/2,this.y+this.h,1));
+			this.board.add(new FireBall(this.x+this.w/2,this.y+this.h,0));
 			
 			var b=this.board;
 			var x = this.x;
@@ -179,12 +180,13 @@ var PlayerShip = function() {
 			}
 			var caller = function(){
 				n+=1;
+				console.log("caling with n: "+String(n))
 				callee(b,n,x,y,w,h);
 				
 			};
-			setTimeout(caller,60);
-			setTimeout(caller,120);
-			setTimeout(caller,180);
+			setTimeout(caller,90);
+			setTimeout(caller,150);
+			setTimeout(caller,210);
 		}
     };
 
@@ -223,6 +225,8 @@ var PlayerMissile = function(x,y) {
 var FireBall = function(x,y,type){
 	this.firecase='fireball_'+String(type+1);
 	this.frame=1+type*3;
+	console.log(this.frame);
+	console.log(this.firecase);
 	this.w = SpriteSheet.map[this.firecase].w;
 	this.h = SpriteSheet.map[this.firecase].h;
 	this.x = x - this.w/2;
@@ -236,7 +240,7 @@ FireBall.prototype.step = function(dt)  {
 };
 
 FireBall.prototype.draw = function(ctx)  {
-	console.log(this.frame);
+	//console.log(this.frame);
     SpriteSheet.draw(ctx,this.firecase,this.x,this.y,this.frame);
 };
 
