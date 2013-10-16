@@ -17,7 +17,7 @@ var Game = new function() {
 
     // Inicializa el juego
     this.initialize = function(canvasElementId,sprite_data,callback) {
-	this.canvas = document.getElementById(canvasElementId)
+	this.canvas = document.getElementById(canvasElementId);
 	this.width = this.canvas.width;
 	this.height= this.canvas.height;
 
@@ -32,21 +32,21 @@ var Game = new function() {
     };
 
     // Gestión de la entrada (teclas para izda/derecha y disparo)
-    var KEY_CODES = { 37:'left', 39:'right', 32 :'fire' };
+    var KEY_CODES = { 37:'left', 39:'right', 32 :'fire', 66:'fireball_l', 78:'fireball_r' };
     this.keys = {};
 
     this.setupInput = function() {
 	$(window).keydown(function(event){
 	    if (KEY_CODES[event.which]) {
-		Game.keys[KEY_CODES[event.which]] = true;
-		return false;
+			Game.keys[KEY_CODES[event.which]] = true;
+			return false;
 	    }
 	});
 	
 	$(window).keyup(function(event){
 	    if (KEY_CODES[event.which]) {
-		Game.keys[KEY_CODES[event.which]] = false;
-		return false;
+			Game.keys[KEY_CODES[event.which]] = false;
+			return false;
 	    }
 	});
 	
@@ -207,12 +207,12 @@ var GameBoard = function() {
     // objetos de objects
     this.iterate = function(funcName) {
 	// Convertimos en un array args (1..)
-	var args = Array.prototype.slice.call(arguments,1);
-
-	for(var i=0, len=this.objects.length; i<len;i++) {
-	    var obj = this.objects[i];
-	    obj[funcName].apply(obj,args)
-	}
+    	var args = Array.prototype.slice.call(arguments,1);
+	
+		for(var i=0, len=this.objects.length; i<len;i++) {
+		    var obj = this.objects[i];
+		    obj[funcName].apply(obj,args)
+		}
     };
 
     // Devuelve el primer objeto de objects para el que func es true
