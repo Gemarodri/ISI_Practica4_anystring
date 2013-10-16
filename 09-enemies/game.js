@@ -164,24 +164,25 @@ var PlayerShip = function() {
 			this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
 		}
 		
-		if (this.up && Game.keys['fireball'] && this.reload2<0){
+		if (this.up && (Game.keys['fireball_left'] || Game.keys['fireballs_right']) && this.reload2<0){
+			this.dir_l = Game.keys['fireball_left']		//if true goes to left, otherwise goes to right
 			this.up=false;
 			this.reload2=this.reloadTime2;
-			this.board.add(new FireBall(this.x+this.w/2,this.y+this.h,0));
+			this.board.add(new FireBall(this.x+this.w/2,this.y+this.h,0,d));
 			
 			var b=this.board;
 			var x = this.x;
 			var y = this.y;
 			var h = this.h;
 			var w = this.w;
+			var d = this.d;
 			var n = 0;
-			function callee(board,n,x,y,w,h){
-				board.add(new FireBall(x+w/2,y+h,n));
+			function callee(board,n,x,y,w,h,d){
+				board.add(new FireBall(x+w/2,y+h,n,d));
 			}
 			var caller = function(){
 				n+=1;
-				console.log("caling with n: "+String(n))
-				callee(b,n,x,y,w,h);
+				callee(b,n,x,y,w,h,d);
 				
 			};
 			setTimeout(caller,90);
@@ -222,11 +223,11 @@ var PlayerMissile = function(x,y) {
 //Los metodos de esta clase los a�adimos a su prototipo. De esta
 //forma solo existe una copia de cada uno para todos los misiles, y
 //no una copia para cada objeto misil
-var FireBall = function(x,y,type){
+var FireBall = function(x,y,type,dir){
+	this.dir_l= dir;
 	this.firecase='fireball_'+String(type+1);
 	this.frame=1+type*3;
-	console.log(this.frame);
-	console.log(this.firecase);
+	console.log(this.dir_l ? "left" : "rigth");
 	this.w = SpriteSheet.map[this.firecase].w;
 	this.h = SpriteSheet.map[this.firecase].h;
 	this.x = x - this.w/2;
