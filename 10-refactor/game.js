@@ -117,8 +117,7 @@ var Starfield = function(speed,opacity,numStars,clear) {
 // La clase PlayerShip tambien ofrece la interfaz step(), draw() para
 // poder ser dibujada desde el bucle principal del juego
 var PlayerShip = function() { 
-    this.setup('ship', { vx: 0, reloadTime: 0.25, maxVel: 200 });
-    this.reloadTime2=1;
+    this.setup('ship', { vx: 0, reloadTime: 0.25, reloadTime2: 1, maxVel: 200 });
     this.reload2 = this.reloadTime2;
     this.reload = this.reloadTime;
     this.x = Game.width/2 - this.w / 2;
@@ -150,7 +149,7 @@ var PlayerShip = function() {
 		}
 		
 		if (this.up && (Game.keys['fireball_l'] || Game.keys['fireball_r']) && this.reload2<0){
-			this.dir_l = Game.keys['fireball_l']		//if true goes to left, otherwise goes to right
+			this.dir_l = Game.keys['fireball_l'];		//if true goes to left, otherwise goes to right
 			this.up=false;
 			this.reload2=this.reloadTime2;
 			this.board.add(new FireBall(this.x+this.w/2,this.y+this.h,0,this.dir_l));
@@ -175,7 +174,7 @@ var PlayerShip = function() {
 			setTimeout(caller,210);
 		}
     };
-}
+};
 
 // Heredamos del prototipo new Sprite()
 PlayerShip.prototype = new Sprite();
@@ -200,29 +199,35 @@ PlayerMissile.prototype.step = function(dt)  {
     if(this.y < -this.h) { this.board.remove(this); }
 };
 
+
 var FireBall = function(x,y,type,dir){
-	this.dir_l= dir;
 	this.firecase='fireball_'+String(type+1);
-	this.frame=1+type*3;
-    this.vx = dir ? -30 : 30;
-    this.vy = -300;
-	this.w = SpriteSheet.map[this.firecase].w;
-	this.h = SpriteSheet.map[this.firecase].h;
+	this.setup(this.firecase,{dir_l:dir, frame: 2+type*2, vx: dir?-30:30, vy:-650});
+	//this.dir_l= dir;
+	//this.frame=1+type*3;
+    //this.vx = dir ? -30 : 30;
+	//this.w = SpriteSheet.map[this.firecase].w;
+	//this.h = SpriteSheet.map[this.firecase].h;
+	//this.vy= -650;
 	this.x = x - this.w/2;
 	this.y = y-this.h;	
-	this.vy= -650;
+	
 };
 
+//Que el constructor de Fireball sea Sprite hace que herede su metodo draw
+FireBall.prototype = new Sprite();
+
 FireBall.prototype.step = function(dt)  {
-	this.vy += 20
-    this.y += this.vy*dt
+	this.vy += 20;
+    this.y += this.vy*dt;
     this.x  += this.vx*dt;
     if(this.y < -this.h) {this.board.remove(this); }
 };
 
-FireBall.prototype.draw = function(ctx)  {
-    SpriteSheet.draw(ctx,this.firecase,this.x,this.y,this.frame);
-};
+
+
+
+
 
 
 
