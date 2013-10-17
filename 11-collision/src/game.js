@@ -1,6 +1,10 @@
 var sprites = {
     ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 },
     missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
+    fireball_1: { sx: 0, sy: 64, w: 64, h: 64, frames: 1 },
+    fireball_2: { sx: 0, sy: 64, w: 64, h: 64, frames: 3 },
+    fireball_3: { sx: 0, sy: 64, w: 64, h: 64, frames: 5 },
+    fireball_4: { sx: 0, sy: 64, w: 64, h: 64, frames: 7 },
     enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
     enemy_bee: { sx: 79, sy: 0, w: 37, h: 43, frames: 1 },
     enemy_ship: { sx: 116, sy: 0, w: 42, h: 43, frames: 1 },
