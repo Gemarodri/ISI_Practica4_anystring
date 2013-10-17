@@ -221,7 +221,6 @@ var FireBall = function(x,y,type,dir){
 	this.setup(this.firecase,{dir_l:dir, frame: 2+type*2, vx: dir?-30:30, vy:-650});
 	this.x = x - this.w/2;
 	this.y = y-this.h;	
-	
 };
 
 //Que el constructor de Fireball sea Sprite hace que herede su metodo draw

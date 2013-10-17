@@ -82,29 +82,32 @@
 
 describe("Pruebas de integración. Prototipo 11.", function(){
 	
-	var OBJECT_PLAYER        =  1,
-	OBJECT_PLAYER_PROJECTILE =  2,
-	OBJECT_ENEMY             =  4,
-	OBJECT_ENEMY_PROJECTILE  =  8,
-	OBJECT_POWERUP           = 16;
+	var canvas, ctx;
+
+    	beforeEach(function(){
+		loadFixtures('index.html');
+
+		canvas = $('#game')[0];
+		expect(canvas).toExist();
+
+		ctx = canvas.getContext('2d');
+		expect(ctx).toBeDefined();
+
+    	});
+
 
 	it("Misil colisionando con nave enemiga", function(){
-		var misil = new PlayerMissile(10,10);
-		var enemigo = new Enemy(enemies.basic, { x: 200 });
-		var board = new GameBoard();
-		var board1 = new GameBoard();
 
-		misil.setup('missile',{vy: -700, damage: 1000});
-		misil.board = board;
-		enemigo.board = board1;
-		misil.board.resetRemoved();
-		enemigo.board.resetRemoved();
-
-		misil.step(2);
-		enemigo.step(2);
+		var enemis = {
+   			 basic: { x: 100, y: 0, sprite: 'enemy_purple', B: 100, C: 4, E: 100, health: 20 }
+		};
 		
-		expect(misil.board.removed[0]).toEqual(misil);
-		expect(enemigo.board.removed[0]).toEqual(enemigo);
+		var game = new GameBoard();
+		var enemigo = new Enemy(enemis.basic);
+		var misil = new PlayerMissile(100,0);
+		
+		
+		
 	});
 
 
