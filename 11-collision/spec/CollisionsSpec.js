@@ -78,3 +78,28 @@
   jugador, desaparece.
 
 */
+
+
+describe("Pruebas de integración. Prototipo 11.", function(){
+	
+	var OBJECT_PLAYER        =  1,
+	OBJECT_PLAYER_PROJECTILE =  2,
+	OBJECT_ENEMY             =  4,
+	OBJECT_ENEMY_PROJECTILE  =  8,
+	OBJECT_POWERUP           = 16;
+
+	it("Misil colisionando con nave enemiga", function(){
+		var misil = new PlayerMissile(10,10);
+		var enemigo = new Enemy(enemies.basic, { x: 200 });
+		var board = new GameBoard();
+
+		misil.setup('missile',{vy: -700, damage: 1000});
+		misil.board = board;
+		misil.board.resetRemoved();
+		misil.step(2);
+		expect(misil.board.removed[0]).toEqual(misil);
+	});
+
+
+
+});
