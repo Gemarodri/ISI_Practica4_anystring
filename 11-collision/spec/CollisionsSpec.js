@@ -92,12 +92,19 @@ describe("Pruebas de integración. Prototipo 11.", function(){
 		var misil = new PlayerMissile(10,10);
 		var enemigo = new Enemy(enemies.basic, { x: 200 });
 		var board = new GameBoard();
+		var board1 = new GameBoard();
 
 		misil.setup('missile',{vy: -700, damage: 1000});
 		misil.board = board;
+		enemigo.board = board1;
 		misil.board.resetRemoved();
+		enemigo.board.resetRemoved();
+
 		misil.step(2);
+		enemigo.step(2);
+		
 		expect(misil.board.removed[0]).toEqual(misil);
+		expect(enemigo.board.removed[0]).toEqual(enemigo);
 	});
 
 
