@@ -23,7 +23,12 @@
   <script type="text/javascript" src="spec/StarfieldSpec.js"></script>
   <script type="text/javascript" src="spec/TitleScreenSpec.js"></script>
   <script type="text/javascript" src="spec/PlayerShipSpec.js"></script>
+<<<<<<< HEAD
 
+=======
+  <script type="text/javascript" src="spec/SpriteSpec.js"></script>
+  <script type="text/javascript" src="spec/CollisionSpec.js"></script>
+>>>>>>> 07ba5b54e1cf3241952684e8c9f23494ebff84dd
 
   <script type="text/javascript">
     (function() {
