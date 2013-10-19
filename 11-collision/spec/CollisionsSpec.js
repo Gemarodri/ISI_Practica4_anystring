@@ -92,24 +92,39 @@ describe("Pruebas de integración. Prototipo 11.", function(){
 
 		ctx = canvas.getContext('2d');
 		expect(ctx).toBeDefined();
-
     	});
 
 
 	it("Misil colisionando con nave enemiga", function(){
 
-		var enemis = {
-   			 basic: { x: 100, y: 0, sprite: 'enemy_purple', B: 100, C: 4, E: 100, health: 20 }
-		};
-		
+		SpriteSheet.map = {
+                                        missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
+                                        enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
+                                        explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 },
+                };
+
 		var game = new GameBoard();
-		var enemigo = new Enemy(enemis.basic);
+		var enemigo = new Enemy(enemies.basic);
 		var misil = new PlayerMissile(100,0);
 		
+		misil.x = 10;
+		misil.y = 10;
+		enemigo.x = 10;
+		enemigo.y = 10;
+
+		enemigo.damage = 10;
+		enemigo.health = 5;
+
+
+		game.add(misil);
+		game.add(enemigo);
 		
+		expect(game.objects.length).toEqual(2);
+		game.step(0.0000001);
 		
+
+		expect(game.objects[0].sprite).toEqual("explosion");
+		expect(game.objects[1]).toEqual(undefined);
 	});
-
-
 
 });
