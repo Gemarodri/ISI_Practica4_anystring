@@ -320,6 +320,7 @@ Enemy.prototype.step = function(dt) {
     this.y += this.vy * dt;
 	////alert(this.x+"  "+this.y+"  enemigo");
     var collision = this.board.collide(this,OBJECT_PLAYER);
+    alert(collision);
     if(collision) {
 	collision.hit(this.damage);
 	this.board.remove(this);

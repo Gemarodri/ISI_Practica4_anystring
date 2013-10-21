@@ -193,4 +193,28 @@ describe("Pruebas de integración. Prototipo 11.", function(){
     expect(game.objects[2]).toEqual(undefined);
     });
 
+  it ("Nave colisionando con nave enemiga",function(){
+
+
+    SpriteSheet.map = {
+                                        enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
+                                        ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 },
+                                      
+                };
+
+		var game = new GameBoard();
+		var enemigo = new Enemy(enemies.basic);
+    var nave = new PlayerShip();
+    enemigo.x = 10;
+    enemigo.y = 10;
+    nave.x = 10;
+    nave.y = 10;
+		game.add(nave);
+		game.add(enemigo);
+    game.step(0.0000001);
+
+    expect(game.objects[0]).toEqual(undefined);
+
+    });
+
 });
