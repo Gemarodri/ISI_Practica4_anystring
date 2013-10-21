@@ -72,16 +72,16 @@ describe("Enemy", function(){
 
 		ctx = canvas.getContext('2d');
 		expect(ctx).toBeDefined();
-
-    });
-	
-	it("Enemy draw", function(){
-	
 		SpriteSheet = {
 			map: {enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 }},
 			draw : function () {}
 		}
 		 
+
+    });
+	
+	it("Enemy draw", function(){
+	
 		Game = {width: 320, height: 480};
 		
 		//theEnemy= new Enemy({sprite:'enemy_purple'});
