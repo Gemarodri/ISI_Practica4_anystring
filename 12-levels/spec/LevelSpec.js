@@ -51,3 +51,48 @@
         el nivel ni enemigos en el tablero de juegos.
 
 */
+
+describe("Pruebas unitarias de Level", function(){
+
+  var OBJECT_PLAYER        =  1,
+	OBJECT_PLAYER_PROJECTILE =  2,
+	OBJECT_ENEMY             =  4,
+	OBJECT_ENEMY_PROJECTILE  =  8,
+	OBJECT_POWERUP           = 16;
+	
+	var canvas, ctx;
+
+    	beforeEach(function(){
+		loadFixtures('index.html');
+
+		canvas = $('#game')[0];
+		expect(canvas).toExist();
+
+		ctx = canvas.getContext('2d');
+		expect(ctx).toBeDefined();
+    	});
+
+  it("Prueba del primer metodo de Level", function(){
+    
+    var sprites = {
+    enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
+    };
+
+    var enemies = {
+    ltr:      { x: 0,   y: -100, sprite: 'enemy_purple', health: 10, 
+		B: 75, C: 1, E: 100  },
+    };
+
+    var level1 = [
+  //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
+    [ 0,        4000,  500,         'ltr'                 ],
+    ];
+
+    var remove = [];
+    var callback = function(){};
+    var nivel = new Level(level1,callback);
+    spyOn (nivel, "callback");
+
+    expect(nivel.callback).toHaveBeenCalled();
+  });
+});
