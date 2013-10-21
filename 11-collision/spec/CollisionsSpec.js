@@ -170,9 +170,9 @@ describe("Pruebas de integración. Prototipo 11.", function(){
 
 
     SpriteSheet.map = {
-                                        missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
                                         enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
                                         explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 },
+                                        fireball_1: { sx: 0, sy: 64, w: 64, h: 64, frames: 1 },
                 };
 
 		var game = new GameBoard();
@@ -184,12 +184,13 @@ describe("Pruebas de integración. Prototipo 11.", function(){
     enemigo.y = 10;
     enemigo.damage = bola.damage;
 		enemigo.health = 15;
-		game.add(misil);
+		game.add(bola);
 		game.add(enemigo);
     game.step(0.0000001);
 
-    expect(game.objects[0]).toEqual("enemy_purple");
-    expect(game.objects[1]).toEqual(undefined);
+    expect(game.objects[0].sprite).toEqual("fireball_1");
+    expect(game.objects[1].sprite).toEqual("explosion");
+    expect(game.objects[2]).toEqual(undefined);
     });
 
 });
