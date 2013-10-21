@@ -78,9 +78,15 @@
   jugador, desaparece.
 
 */
-
+  
 
 describe("Pruebas de integración. Prototipo 11.", function(){
+	
+  var OBJECT_PLAYER        =  1,
+	OBJECT_PLAYER_PROJECTILE =  2,
+	OBJECT_ENEMY             =  4,
+	OBJECT_ENEMY_PROJECTILE  =  8,
+	OBJECT_POWERUP           = 16;
 	
 	var canvas, ctx;
 
@@ -127,7 +133,6 @@ describe("Pruebas de integración. Prototipo 11.", function(){
 		expect(game.objects[1]).toEqual(undefined);
 	});
 
-
 	it("Misil colisionando con nave enemiga con daño insuficiente.", function(){
 
 		SpriteSheet.map = {
@@ -159,4 +164,32 @@ describe("Pruebas de integración. Prototipo 11.", function(){
 		expect(game.objects[0].sprite).toEqual("enemy_purple");
 		expect(game.objects[1]).toEqual(undefined);
 	});
+
+
+  it ("Bola de fuego colisionando con nave enemiga",function(){
+
+
+    SpriteSheet.map = {
+                                        missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
+                                        enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
+                                        explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 },
+                };
+
+		var game = new GameBoard();
+		var enemigo = new Enemy(enemies.basic);
+    var bola = new FireBall(95,-50,0,true);
+    bola.x = 10;
+    bola.y = 10;
+    enemigo.x = 10;
+    enemigo.y = 10;
+    enemigo.damage = bola.damage;
+		enemigo.health = 15;
+		game.add(misil);
+		game.add(enemigo);
+    game.step(0.0000001);
+
+    expect(game.objects[0]).toEqual("enemy_purple");
+    expect(game.objects[1]).toEqual(undefined);
+    });
+
 });

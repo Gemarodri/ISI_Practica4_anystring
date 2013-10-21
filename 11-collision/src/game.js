@@ -232,7 +232,15 @@ FireBall.prototype.step = function(dt)  {
 	this.vy += 20;
     this.y += this.vy*dt;
     this.x  += this.vx*dt;
-    if(this.y < -this.h) {this.board.remove(this); }
+    if(this.y < -this.h) {this.board.removed;}
+    var collision = this.board.collide(this,OBJECT_ENEMY);
+    if(collision) {
+	//alert("dano misil: "+this.damage);
+	    collision.hit(this.damage);
+	    this.board.remove(collision);
+      } else if(this.y < -this.h) { 
+	    this.board.remove(collision); 
+    }
 };
 
 
