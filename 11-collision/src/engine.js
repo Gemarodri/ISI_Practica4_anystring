@@ -167,7 +167,7 @@ var GameBoard = function() {
 
     // Añade obj a objects
     this.add = function(obj) { 
-	alert(obj.sprite+" agregado a objects");
+	//alert(obj.sprite+" agregado a objects");
 	obj.board=this;  // Para que obj pueda referenciar el tablero
 	this.objects.push(obj); 
 	return obj; 
@@ -287,6 +287,6 @@ Sprite.prototype.draw = function(ctx) {
 }
 
 Sprite.prototype.hit = function(damage) {
-	alert("dano: "+damage);
+	//alert("dano: "+damage);
     this.board.remove(this);
 }

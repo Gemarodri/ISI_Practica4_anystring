@@ -206,10 +206,10 @@ PlayerMissile.prototype.type = OBJECT_PLAYER_PROJECTILE;
 
 PlayerMissile.prototype.step = function(dt)  {
     this.y += this.vy * dt;
-	alert(this.x+"  "+this.y+"  misil");
+	//alert(this.x+"  "+this.y+"  misil");
     var collision = this.board.collide(this,OBJECT_ENEMY);
     if(collision) {
-	alert("dano misil: "+this.damage);
+	//alert("dano misil: "+this.damage);
 	collision.hit(this.damage);
 	this.board.remove(this);
     } else if(this.y < -this.h) { 
@@ -308,8 +308,8 @@ Enemy.prototype.step = function(dt) {
 
     this.x += this.vx * dt;
     this.y += this.vy * dt;
-	alert(this.x+"  "+this.y+"  enemigo");
-    var collision = this.board.collide(this,OBJECT_PLAYER_PROJECTILE);
+	////alert(this.x+"  "+this.y+"  enemigo");
+    var collision = this.board.collide(this,OBJECT_PLAYER);
     if(collision) {
 	collision.hit(this.damage);
 	this.board.remove(this);
@@ -323,8 +323,8 @@ Enemy.prototype.step = function(dt) {
 }
 
 Enemy.prototype.hit = function(damage) {
-	alert("dano enemigo: "+this.damage);
-	alert("salud enemigo: "+this.health);
+	//alert("dano enemigo: "+this.damage);
+	//alert("salud enemigo: "+this.health);
     this.health -= damage;
     if(this.health <= 0) {
 	this.board.add(new Explosion(this.x + this.w/2, 

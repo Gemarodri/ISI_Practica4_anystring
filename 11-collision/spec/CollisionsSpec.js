@@ -127,4 +127,36 @@ describe("Pruebas de integración. Prototipo 11.", function(){
 		expect(game.objects[1]).toEqual(undefined);
 	});
 
+
+	it("Misil colisionando con nave enemiga con daño insuficiente.", function(){
+
+		SpriteSheet.map = {
+                                        missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
+                                        enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
+                                        explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 },
+                };
+
+		var game = new GameBoard();
+		var enemigo = new Enemy(enemies.basic);
+		var misil = new PlayerMissile(100,0);
+		
+		misil.x = 10;
+		misil.y = 10;
+		enemigo.x = 10;
+		enemigo.y = 10;
+
+		enemigo.damage = misil.damage;
+		enemigo.health = 15;
+
+
+		game.add(misil);
+		game.add(enemigo);
+		
+		expect(game.objects.length).toEqual(2);
+		game.step(0.0000001);
+		
+
+		expect(game.objects[0].sprite).toEqual("enemy_purple");
+		expect(game.objects[1]).toEqual(undefined);
+	});
 });
