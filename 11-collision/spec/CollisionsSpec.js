@@ -78,16 +78,16 @@
   jugador, desaparece.
 
 */
-
+  
 
 describe("Pruebas de integración. Prototipo 11.", function(){
 	
-	var OBJECT_PLAYER        =  1,
+  var OBJECT_PLAYER        =  1,
 	OBJECT_PLAYER_PROJECTILE =  2,
 	OBJECT_ENEMY             =  4,
 	OBJECT_ENEMY_PROJECTILE  =  8,
 	OBJECT_POWERUP           = 16;
-
+	
 	it("Misil colisionando con nave enemiga", function(){
 		var misil = new PlayerMissile(10,10);
 		var enemigo = new Enemy(enemies.basic, { x: 200 });
@@ -101,5 +101,18 @@ describe("Pruebas de integración. Prototipo 11.", function(){
 	});
 
 
+  it ("Bola de fuego colisionando con nave enemiga",function(){
 
+    var bola = new FireBall(95,-50,0,true);
+    var enemigo = new Enemy(enemies.basic);
+    var board = new GameBoard();
+    var board1 = new GameBoard();
+    bola.board = board;
+    enemigo.board = board1;
+    bola.board = board;
+    bola.board.resetRemoved();
+    enemigo.board.resetRemoved();
+    bola.step(1);
+    expect(enemigo.board.removed[0]).toEqual(enemigo);
+    });
 });
