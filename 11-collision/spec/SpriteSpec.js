@@ -1,21 +1,28 @@
 describe("Sprite Specs",function(){
+	var oldGame= Game;
     beforeEach(function(){
 	    	loadFixtures('index.html');	
 	    	canvas = $('#game')[0];
 	    	expect(canvas).toExist();	
 	    	ctx = canvas.getContext('2d');
 	    	expect(ctx).toBeDefined();
+		SpriteSheet={
+	    		map:{
+	    		    ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 },
+	    		    missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
+	    		    fireball_1: { sx: 0, sy: 64, w: 64, h: 64, frames: 1 },
+	    		    enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 }
+	    		}
+	    };
+	    oldGame= Game;
         });
-    SpriteSheet={
-    		map:{
-    		    ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 },
-    		    missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
-    		    fireball_1: { sx: 0, sy: 64, w: 64, h: 64, frames: 1 },
-    		    enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 }
-    		}
-    };
+	afterEach(function(){
+		Game=oldGame;	
+	});
+
     
     it("PlayerShip",function(){
+	Game = {width: 320, height: 480};
     	var aShip = new PlayerShip(100,100);
     	expect(aShip.draw).toBeDefined();
     	expect(aShip.reload).toBe(0.25);

@@ -1,6 +1,10 @@
 var sprites = {
     ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 },
     missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
+    fireball_1: { sx: 0, sy: 64, w: 64, h: 64, frames: 1 },
+    fireball_2: { sx: 0, sy: 64, w: 64, h: 64, frames: 3 },
+    fireball_3: { sx: 0, sy: 64, w: 64, h: 64, frames: 5 },
+    fireball_4: { sx: 0, sy: 64, w: 64, h: 64, frames: 7 },
     enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
     enemy_bee: { sx: 79, sy: 0, w: 37, h: 43, frames: 1 },
     enemy_ship: { sx: 116, sy: 0, w: 42, h: 43, frames: 1 },
@@ -10,6 +14,7 @@ var sprites = {
 
 var enemies = {
 
+	basic: { x: 100, y: -50, sprite: 'enemy_purple', B: 100, C: 4, E: 100, health: 20 },
     // straight sólo tiene el parámetro E para la velocidad vertical,
     // por lo que se mueve hacia abajo a velocidad constante.
     straight: { x: 0,   y: -50, sprite: 'enemy_ship', health: 10, 
@@ -204,9 +209,10 @@ var Starfield = function(speed,opacity,numStars,clear) {
 // La clase PlayerShip tambien ofrece la interfaz step(), draw() para
 // poder ser dibujada desde el bucle principal del juego
 var PlayerShip = function() { 
-    this.setup('ship', { vx: 0, reloadTime: 0.25, maxVel: 200 });
+    this.setup('ship', { vx: 0, reloadTime: 0.25, reloadTime2: 1, maxVel: 200 });
 
     this.reload = this.reloadTime;
+    this.reload2 = this.reloadTime2;
     this.x = Game.width/2 - this.w / 2;
     this.y = Game.height - 10 - this.h;
 
@@ -223,7 +229,11 @@ var PlayerShip = function() {
 	}
 
 	this.reload-=dt;
-	if(Game.keys['fire'] && this.reload < 0) {
+	this.reload2-=dt;
+		
+		if(!Game.keys['fire']) this.up = true;
+	if(this.up && Game.keys['fire'] && this.reload < 0) {
+	    this.up=false;
 	    // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
 	    Game.keys['fire'] = false;
 	    this.reload = this.reloadTime;
@@ -232,6 +242,31 @@ var PlayerShip = function() {
 	    this.board.add(new PlayerMissile(this.x,this.y+this.h/2));
 	    this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
 	}
+	if (this.up && this.reload2<0 && (Game.keys['fireball_l'] || Game.keys['fireball_r']) ){
+			this.dir_l = Game.keys['fireball_l'];		//if true goes to left, otherwise goes to right
+			this.up=false;
+			this.reload2=this.reloadTime2;
+			this.board.add(new FireBall(this.x+this.w/2,this.y+this.h,0,this.dir_l));
+			
+			var b=this.board;
+			var x = this.x;
+			var y = this.y;
+			var h = this.h;
+			var w = this.w;
+			var d = this.dir_l;
+			var n = 0;
+			function callee(board,n,x,y,w,h,d){
+				board.add(new FireBall(x+w/2,y+h,n,d));
+			}
+			var caller = function(){
+				n+=1;
+				callee(b,n,x,y,w,h,d);
+				
+			};
+			setTimeout(caller,90);
+			setTimeout(caller,150);
+			setTimeout(caller,210);
+		}
     };
 };
 
@@ -255,8 +290,8 @@ PlayerShip.prototype.hit = function(damage) {
 // no una copia para cada objeto misil
 var PlayerMissile = function(x,y) {
     this.setup('missile',{ vy: -700, damage: 10 });
-    this.x = x - this.w/2;
-    this.y = y - this.h; 
+    this.x = x + this.w/2;
+    this.y = y + this.h; 
 };
 
 PlayerMissile.prototype = new Sprite();
@@ -272,6 +307,34 @@ PlayerMissile.prototype.step = function(dt)  {
 	this.board.remove(this); 
     }
 };
+var FireBall = function(x,y,type,dir){
+	this.firecase='fireball_'+String(type+1);
+	this.setup(this.firecase,{dir_l:dir, frame: 2+type*2, vx: dir?-30:30, vy:-650});
+	this.x = x - this.w/2;
+	this.y = y-this.h;	
+};
+
+//Que el constructor de Fireball sea Sprite hace que herede su metodo draw
+FireBall.prototype = new Sprite();
+
+FireBall.prototype.step = function(dt)  {
+	this.vy += 20;
+    this.y += this.vy*dt;
+    this.x  += this.vx*dt;
+    if(this.y < -this.h) {this.board.removed;}
+    var collision = this.board.collide(this,OBJECT_ENEMY);
+    if(collision) {
+      this.board.add(new Explosion(this.x + this.w/2, 
+                                     this.y + this.h/2));
+	//alert("dano misil: "+this.damage);
+	    collision.hit(this.damage);
+	    this.board.remove(collision);
+      } else if(this.y < -this.h) { 
+	    this.board.remove(collision); 
+    }
+};
+
+
 
 
 // Constructor para las naves enemigas. Un enemigo se define mediante

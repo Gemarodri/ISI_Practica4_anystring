@@ -197,8 +197,8 @@ PlayerShip.prototype.type = OBJECT_PLAYER;
 // no una copia para cada objeto misil
 var PlayerMissile = function(x,y) {
     this.setup('missile',{ vy: -700, damage: 10 });
-    this.x = x - this.w/2;
-    this.y = y - this.h; 
+    this.x = x + this.w/2;
+    this.y = y + this.h; 
 };
 
 PlayerMissile.prototype = new Sprite();
@@ -320,7 +320,7 @@ Enemy.prototype.step = function(dt) {
     this.y += this.vy * dt;
 	////alert(this.x+"  "+this.y+"  enemigo");
     var collision = this.board.collide(this,OBJECT_PLAYER);
-    alert(collision);
+    //alert(collision);
     if(collision) {
 	collision.hit(this.damage);
 	this.board.remove(this);

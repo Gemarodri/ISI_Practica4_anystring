@@ -13,7 +13,7 @@
 
 // Objeto singleton Game: se guarda una unica instancia del
 // constructor anónimo en el objeto Game
-var Game = new function() {                                                                  
+var Game = new function() {                                                                
 
     // Inicializa el juego
     this.initialize = function(canvasElementId,sprite_data,callback) {
@@ -32,7 +32,7 @@ var Game = new function() {
     };
 
     // Gestión de la entrada (teclas para izda/derecha y disparo)
-    var KEY_CODES = { 37:'left', 39:'right', 32 :'fire' };
+    var KEY_CODES = { 37:'left', 39:'right', 32 :'fire', 66:'fireball_l', 78:'fireball_r' };
     this.keys = {};
 
     this.setupInput = function() {
