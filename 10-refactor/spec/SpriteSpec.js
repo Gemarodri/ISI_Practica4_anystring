@@ -17,7 +17,7 @@ describe("Sprite Specs",function(){
 
     
     it("PlayerShip",function(){
-
+	Game = {width: 320, height: 480};
     	var aShip = new PlayerShip(100,100);
     	expect(aShip.draw).toBeDefined();
     	expect(aShip.reload).toBe(0.25);
