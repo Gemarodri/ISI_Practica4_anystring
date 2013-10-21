@@ -88,31 +88,108 @@ describe("Pruebas de integración. Prototipo 11.", function(){
 	OBJECT_ENEMY_PROJECTILE  =  8,
 	OBJECT_POWERUP           = 16;
 	
-	it("Misil colisionando con nave enemiga", function(){
-		var misil = new PlayerMissile(10,10);
-		var enemigo = new Enemy(enemies.basic, { x: 200 });
-		var board = new GameBoard();
+	var canvas, ctx;
 
-		misil.setup('missile',{vy: -700, damage: 1000});
-		misil.board = board;
-		misil.board.resetRemoved();
-		misil.step(2);
-		expect(misil.board.removed[0]).toEqual(misil);
+    	beforeEach(function(){
+		loadFixtures('index.html');
+
+		canvas = $('#game')[0];
+		expect(canvas).toExist();
+
+		ctx = canvas.getContext('2d');
+		expect(ctx).toBeDefined();
+    	});
+
+
+	it("Misil colisionando con nave enemiga", function(){
+
+		SpriteSheet.map = {
+                                        missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
+                                        enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
+                                        explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 },
+                };
+
+		var game = new GameBoard();
+		var enemigo = new Enemy(enemies.basic);
+		var misil = new PlayerMissile(100,0);
+		
+		misil.x = 10;
+		misil.y = 10;
+		enemigo.x = 10;
+		enemigo.y = 10;
+
+		enemigo.damage = 10;
+		enemigo.health = 5;
+
+
+		game.add(misil);
+		game.add(enemigo);
+		
+		expect(game.objects.length).toEqual(2);
+		game.step(0.0000001);
+		
+
+		expect(game.objects[0].sprite).toEqual("explosion");
+		expect(game.objects[1]).toEqual(undefined);
+	});
+
+	it("Misil colisionando con nave enemiga con daño insuficiente.", function(){
+
+		SpriteSheet.map = {
+                                        missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
+                                        enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
+                                        explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 },
+                };
+
+		var game = new GameBoard();
+		var enemigo = new Enemy(enemies.basic);
+		var misil = new PlayerMissile(100,0);
+		
+		misil.x = 10;
+		misil.y = 10;
+		enemigo.x = 10;
+		enemigo.y = 10;
+
+		enemigo.damage = misil.damage;
+		enemigo.health = 15;
+
+
+		game.add(misil);
+		game.add(enemigo);
+		
+		expect(game.objects.length).toEqual(2);
+		game.step(0.0000001);
+		
+
+		expect(game.objects[0].sprite).toEqual("enemy_purple");
+		expect(game.objects[1]).toEqual(undefined);
 	});
 
 
   it ("Bola de fuego colisionando con nave enemiga",function(){
 
+
+    SpriteSheet.map = {
+                                        missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
+                                        enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
+                                        explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 },
+                };
+
+		var game = new GameBoard();
+		var enemigo = new Enemy(enemies.basic);
     var bola = new FireBall(95,-50,0,true);
-    var enemigo = new Enemy(enemies.basic);
-    var board = new GameBoard();
-    var board1 = new GameBoard();
-    bola.board = board;
-    enemigo.board = board1;
-    bola.board = board;
-    bola.board.resetRemoved();
-    enemigo.board.resetRemoved();
-    bola.step(1);
-    expect(enemigo.board.removed[0]).toEqual(enemigo);
+    bola.x = 10;
+    bola.y = 10;
+    enemigo.x = 10;
+    enemigo.y = 10;
+    enemigo.damage = bola.damage;
+		enemigo.health = 15;
+		game.add(misil);
+		game.add(enemigo);
+    game.step(0.0000001);
+
+    expect(game.objects[0]).toEqual("enemy_purple");
+    expect(game.objects[1]).toEqual(undefined);
     });
+
 });
