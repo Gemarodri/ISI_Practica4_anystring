@@ -235,6 +235,8 @@ FireBall.prototype.step = function(dt)  {
     if(this.y < -this.h) {this.board.removed;}
     var collision = this.board.collide(this,OBJECT_ENEMY);
     if(collision) {
+      this.board.add(new Explosion(this.x + this.w/2, 
+                                     this.y + this.h/2));
 	//alert("dano misil: "+this.damage);
 	    collision.hit(this.damage);
 	    this.board.remove(collision);
