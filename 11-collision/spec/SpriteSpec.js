@@ -1,4 +1,5 @@
 describe("Sprite Specs",function(){
+	var oldGame= Game;
     beforeEach(function(){
 	    	loadFixtures('index.html');	
 	    	canvas = $('#game')[0];
@@ -13,7 +14,11 @@ describe("Sprite Specs",function(){
 	    		    enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 }
 	    		}
 	    };
+	    oldGame= Game;
         });
+	afterEach(function(){
+		Game=oldGame;	
+	});
 
     
     it("PlayerShip",function(){

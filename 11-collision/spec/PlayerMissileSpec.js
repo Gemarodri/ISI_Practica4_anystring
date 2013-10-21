@@ -30,6 +30,7 @@
 describe("PlayerMissile", function(){
 	
 	var canvas, ctx;
+	var oldGame=Game;
 
     beforeEach(function(){
 		loadFixtures('index.html');
@@ -39,7 +40,11 @@ describe("PlayerMissile", function(){
 
 		ctx = canvas.getContext('2d');
 		expect(ctx).toBeDefined();
+		oldGame=Game;
     });
+	afterEach(function(){
+		Game=oldGame;	
+	});
 	
 	it(" Playermyissile draw", function(){
 	

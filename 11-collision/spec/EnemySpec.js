@@ -63,6 +63,7 @@
 describe("Enemy", function(){
 	
 	var canvas, ctx;
+	var oldGame;
 
     beforeEach(function(){
 		loadFixtures('index.html');
@@ -76,9 +77,12 @@ describe("Enemy", function(){
 			map: {enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 }},
 			draw : function () {}
 		}
-		 
+		oldGame= Game; 
 
     });
+	afterEach(function(){
+		Game=oldGame;
+	});
 	
 	it("Enemy draw", function(){
 	

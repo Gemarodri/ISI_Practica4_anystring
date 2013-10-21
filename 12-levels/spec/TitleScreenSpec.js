@@ -9,7 +9,7 @@ describe("Clase TitleScreen", function(){
 
 
     var canvas, ctx;
-
+    var	oldGame= Game;
     beforeEach(function(){
 	loadFixtures('index.html');
 
@@ -18,8 +18,12 @@ describe("Clase TitleScreen", function(){
 
 	ctx = canvas.getContext('2d');
 	expect(ctx).toBeDefined();
+	oldGame= Game;
 
     });
+   afterEach(function(){
+		Game=oldGame;	
+	});
 
 
     it("draw", function(){

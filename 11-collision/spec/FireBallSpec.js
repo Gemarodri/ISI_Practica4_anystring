@@ -1,6 +1,7 @@
 describe("FireBall", function(){
 	
 	var canvas, ctx;
+	var oldGame=Game
 
     beforeEach(function(){
 		loadFixtures('index.html');
@@ -18,8 +19,11 @@ describe("FireBall", function(){
 			draw : function () {}
 		};
 
-		
+		oldGame=Game;
     });
+	afterEach(function(){
+		Game=oldGame;	
+	});
 	
 	it("FireBalls draw", function(){
 		 
