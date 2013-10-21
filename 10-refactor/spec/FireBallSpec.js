@@ -44,6 +44,7 @@ describe("FireBall", function(){
 		
 		var dummyfireball=function(){
 			this.remove = function () {}
+			//this.collide= function() {}
 		};
 		
 		fireball_l.board= new dummyfireball();

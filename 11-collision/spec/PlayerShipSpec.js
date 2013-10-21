@@ -1,5 +1,5 @@
 describe("Clase PlayerShip", function(){
-    // Una vez comenzado el juego deberá aparecer la nave del jugador en
+    // Una vez comenzado el juego deberï¿½ aparecer la nave del jugador en
     // la parte inferior
 
     // La nave debera moverse a izquierda y derecha con las teclas de las
@@ -21,15 +21,14 @@ describe("Clase PlayerShip", function(){
 
 
     it("draw", function(){
-	// Comprobamos que draw llama a SpriteSheet.draw con los
-	// parametros adecuados
-	spyOn(SpriteSheet, "draw");
 
 	// Necesitamos tener Game.width y Game.height para que el
 	// constructor de PlayerShip pueda inicializar x e y
 	Game = {width: 320, height: 480};
-
+	// Comprobamos que draw llama a SpriteSheet.draw con los
+	// parametros adecuados
 	var miNave = new PlayerShip();
+	spyOn(SpriteSheet, "draw");
 
 	miNave.draw();
 
@@ -64,7 +63,7 @@ describe("Clase PlayerShip", function(){
 
  	miNave.step(1); // Hacemos como que ha pasado 1 segundo
 	// Tras step, con Game.keys['left'] == false, no debe haberse movido,
-        // por lo que lo comparamos con la posición x inicial de PlayerShip
+        // por lo que lo comparamos con la posiciï¿½n x inicial de PlayerShip
 	expect(miNave.x).toEqual(Game.width/2 - miNave.w / 2);
 
 
@@ -82,8 +81,8 @@ describe("Clase PlayerShip", function(){
 	// Creamos un PlayerShip para testar
 	var miNave = new PlayerShip();
 
-	// Tras el siguiente step debería moverse a la izquierda a
-	// esta posición:
+	// Tras el siguiente step deberï¿½a moverse a la izquierda a
+	// esta posiciï¿½n:
 	function xNueva(dt) {
 	    var vxNueva = -miNave.maxVel;
 	    var xNueva =  miNave.x + vxNueva * dt;
@@ -107,8 +106,36 @@ describe("Clase PlayerShip", function(){
 
 
     });
+	
+it("step sin pulsar 'fire' y luego pulsando", function(){
+    	
+		var shipMissile = new PlayerShip();
+	SpriteSheet = {
+  			map : {missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 }},
+			draw : function () {}
+	};
+	
+		
+		Board = {
+			add : function () {}
+		};
+		
+		spyOn(Board,'add');
+		shipMissile.board=Board;
+		//con la tecla fire pulsada
+		Game = {keys: {'fire': true}};
+		var loopie = function(){
+			for (var i = 0; i<7; i++){	//70msec
+				shipMissile.step(1);
+				waits(10);
+			}
+		};
+		loopie();
+		expect(Board.add.callCount).toBe(0);
+		
 
 
+	});
 
 });
 
