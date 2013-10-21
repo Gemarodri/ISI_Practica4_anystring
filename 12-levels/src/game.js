@@ -222,8 +222,10 @@ PlayerShip.prototype.type = OBJECT_PLAYER;
 
 // Llamada cuando una nave enemiga colisiona con la nave del usuario
 PlayerShip.prototype.hit = function(damage) {
+    this.board.add(new Explosion(this.x + this.w/2, this.y + this.h/2));
     if(this.board.remove(this)) {
-	loseGame();
+  //alert(this.sprite);
+	setTimeout(loseGame,1000);
     }
 };
 
@@ -358,6 +360,7 @@ var Explosion = function(centerX,centerY) {
 };
 
 Explosion.prototype = new Sprite();
+
 
 Explosion.prototype.step = function(dt) {
     this.frame = Math.floor(this.subFrame++ / 2);
