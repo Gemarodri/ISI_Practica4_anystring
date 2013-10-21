@@ -51,7 +51,7 @@
         el nivel ni enemigos en el tablero de juegos.
 
 */
-describe("Pruebas de integración. Prototipo 11.", function(){
+describe("Pruebas unitarias. Prototipo 12.", function(){
 
 	it("Level.step().", function(){
 
