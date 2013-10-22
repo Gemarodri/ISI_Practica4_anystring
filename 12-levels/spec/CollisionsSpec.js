@@ -111,7 +111,7 @@ describe("Pruebas de integraci�n. Prototipo 11.", function(){
 	});
 
 
-    	});
+    	
 
 
 	it("Misil colisionando con nave enemiga", function(){
@@ -231,4 +231,4 @@ describe("Pruebas de integraci�n. Prototipo 11.", function(){
 
     });
 
-
+});
