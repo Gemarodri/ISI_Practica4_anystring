@@ -211,8 +211,8 @@ describe("Pruebas de integraci�n. Prototipo 11.", function(){
 
     SpriteSheet.map = {
                                         enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
-                                        ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 },
-                                      
+                                        explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 },
+                                        ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 }                                      
                 };
 
 		var game = new GameBoard();
@@ -227,7 +227,7 @@ describe("Pruebas de integraci�n. Prototipo 11.", function(){
 
     game.step(0.0000001);
 
-    expect(game.objects[0]).toEqual(undefined);
+    expect(game.objects[0].sprite).toEqual('explosion');
 
     });
 
