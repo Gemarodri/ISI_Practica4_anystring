@@ -2,8 +2,8 @@
 
   Requisitos:
 
-    El objetivo de este prototipo es añadir niveles al juego. En cada
-    nivel deberán ir apareciendo baterías de enemigos según avanza el
+    El objetivo de este prototipo es aï¿½adir niveles al juego. En cada
+    nivel deberï¿½n ir apareciendo baterï¿½as de enemigos segï¿½n avanza el
     tiempo.
 
     Cada nivel termina cuando no quedan enemigos por crear en ninguno
@@ -18,13 +18,13 @@
     el juego, perdiendo el jugador.
 
 
-  Especificación:
+  Especificaciï¿½n:
 
-    El constructor Level() recibirá como argumentos la definición del
-    nivel y la función callback a la que llamar cuando termine el
+    El constructor Level() recibirï¿½ como argumentos la definiciï¿½n del
+    nivel y la funciï¿½n callback a la que llamar cuando termine el
     nivel.
 
-    La definición del nivel tiene este formato:
+    La definiciï¿½n del nivel tiene este formato:
       [ 
         [ parametros de bateria de enemigos ] , 
         [ parametros de bateria de enemigos ] , 
@@ -32,22 +32,22 @@
       ]
 
 
-      Los parámetros de cada batería de enemigos son estos:
+      Los parï¿½metros de cada baterï¿½a de enemigos son estos:
              Comienzo (ms),  Fin (ms),   Frecuencia (ms),  Tipo,    Override
    Ejemplo:
            [ 0,              4000,       500,              'step',  { x: 100 } ]
 
 
-    Cada vez que se llame al método step() del nivel éste comprobará:
+    Cada vez que se llame al mï¿½todo step() del nivel ï¿½ste comprobarï¿½:
 
-      - si ha llegado ya el momento de añadir nuevos sprites de alguna
-        de las baterías de enemigos.
+      - si ha llegado ya el momento de aï¿½adir nuevos sprites de alguna
+        de las baterï¿½as de enemigos.
     
-      - si hay que eliminar alguna batería del nivel porque ya ha
+      - si hay que eliminar alguna baterï¿½a del nivel porque ya ha
         pasado la ventana de tiempo durante la que hay tiene que crear
         enemigos
 
-      - si hay que terminar porque no quedan baterías de enemigos en
+      - si hay que terminar porque no quedan baterï¿½as de enemigos en
         el nivel ni enemigos en el tablero de juegos.
 
 */
@@ -72,29 +72,6 @@ describe("Pruebas unitarias de Level", function(){
 		expect(ctx).toBeDefined();
     	});
 
-  it("Prueba del primer metodo de Level", function(){
-    
-    var sprites = {
-    enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
-    };
-
-    var enemies = {
-    ltr:      { x: 0,   y: -100, sprite: 'enemy_purple', health: 10, 
-		B: 75, C: 1, E: 100  },
-    };
-
-    var level1 = [
-  //  Comienzo, Fin,   Frecuencia,  Tipo,       Override
-    [ 0,        4000,  500,         'ltr'                 ],
-    ];
-
-    var remove = [];
-    var callback = function(){};
-    var nivel = new Level(level1,callback);
-    spyOn (nivel, "callback");
-
-    expect(nivel.callback).toHaveBeenCalled();
-  });
 
 describe("Pruebas unitarias. Prototipo 12.", function(){
 
@@ -128,4 +105,5 @@ describe("Pruebas unitarias. Prototipo 12.", function(){
 	
 	});
 
+});
 });
