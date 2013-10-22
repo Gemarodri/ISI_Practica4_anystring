@@ -89,7 +89,9 @@ describe("Pruebas de integración. Prototipo 11.", function(){
 	OBJECT_POWERUP           = 16;
 	
 	var canvas, ctx;
+
 	var oldGame=Game;
+
 
     	beforeEach(function(){
 		loadFixtures('index.html');
@@ -99,6 +101,7 @@ describe("Pruebas de integración. Prototipo 11.", function(){
 
 		ctx = canvas.getContext('2d');
 		expect(ctx).toBeDefined();
+
 		oldGame=Game;
 		
     	});
@@ -106,6 +109,9 @@ describe("Pruebas de integración. Prototipo 11.", function(){
 	afterEach(function(){
 		Game=oldGame;	
 	});
+
+
+    	});
 
 
 	it("Misil colisionando con nave enemiga", function(){
@@ -221,6 +227,7 @@ describe("Pruebas de integración. Prototipo 11.", function(){
 	expect(Game).toBeDefined()
 	Game.keys=[];
 	expect(Game.keys).toBeDefined();
+
     game.step(0.0000001);
 
     expect(game.objects[0]).toEqual(undefined);
