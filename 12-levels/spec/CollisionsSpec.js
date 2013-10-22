@@ -224,9 +224,6 @@ describe("Pruebas de integraci�n. Prototipo 11.", function(){
     nave.y = 10;
 		game.add(nave);
 		game.add(enemigo);
-	expect(Game).toBeDefined()
-	Game.keys=[];
-	expect(Game.keys).toBeDefined();
 
     game.step(0.0000001);
 
