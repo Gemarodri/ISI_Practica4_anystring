@@ -5,33 +5,33 @@
   El objetivo de este prototipo es que se detecten colisiones entre
   varios tipos de sprites:
   
-  - Los misiles tienen ahora una nueva propiedad: el daño (damage) que
+  - Los misiles tienen ahora una nueva propiedad: el daï¿½o (damage) que
     producen cuando colisionan con una nave enemiga. Cuando un misil
-    colisione con una nave enemiga le infligirá un daño de cierta
-    cuantía a la nave enemiga con la que impacta, y desaparecerá.
+    colisione con una nave enemiga le infligirï¿½ un daï¿½o de cierta
+    cuantï¿½a a la nave enemiga con la que impacta, y desaparecerï¿½.
 
   - Las naves enemigas tienen ahora una nueva propiedad: su salud
-    (health).  El daño ocasionado a una nave enemiga por un misil hará
+    (health).  El daï¿½o ocasionado a una nave enemiga por un misil harï¿½
     que disminuya la salud de la nave enemiga, y cuando llegue a cero,
-    la nave enemiga desaparecerá.
+    la nave enemiga desaparecerï¿½.
 
-  - cuando una nave enemiga colisione con la nave del jugador, deberá
+  - cuando una nave enemiga colisione con la nave del jugador, deberï¿½
     desaparecer tanto la nave enemiga como la nave del jugador.
 
 
 
-  Especificación:
+  Especificaciï¿½n:
 
-  En el prototipo 07-gameboard se añadió el constructor GameBoard. El
-  método overlap() de los objetos creados con GameBoard() ofrece
-  funcionalidad para comprobar si los rectángulos que circunscriben a
-  los sprites que se le pasan como parámetros tienen intersección no
-  nula. El método collide() de GameBoard utiliza overlap() para
-  detectar si el objeto que se le pasa como primer parámetro ha
-  colisionado con algún objeto del tipo que se le pasa como segundo
-  parámetro.
+  En el prototipo 07-gameboard se aï¿½adiï¿½ el constructor GameBoard. El
+  mï¿½todo overlap() de los objetos creados con GameBoard() ofrece
+  funcionalidad para comprobar si los rectï¿½ngulos que circunscriben a
+  los sprites que se le pasan como parï¿½metros tienen intersecciï¿½n no
+  nula. El mï¿½todo collide() de GameBoard utiliza overlap() para
+  detectar si el objeto que se le pasa como primer parï¿½metro ha
+  colisionado con algï¿½n objeto del tipo que se le pasa como segundo
+  parï¿½metro.
 
-  En este prototipo se utilizará el método collide() para detectar los
+  En este prototipo se utilizarï¿½ el mï¿½todo collide() para detectar los
   siguientes tipos de colisiones:
 
     a) detectar si un misil disparado por la nave del jugador
@@ -40,12 +40,12 @@
     b) detectar si una nave enemiga colisiona con la nave del jugador
 
 
-  En el método step() de los objetos creados con PlayerMissile() y
-  Enemy(), tras "moverse" a su nueva posición calculada, se comprobará
-  si han colisionado con algún objeto del tipo correspondiente. 
+  En el mï¿½todo step() de los objetos creados con PlayerMissile() y
+  Enemy(), tras "moverse" a su nueva posiciï¿½n calculada, se comprobarï¿½
+  si han colisionado con algï¿½n objeto del tipo correspondiente. 
 
   No interesa comprobar si se colisiona con cualquier otro objeto,
-  sino sólo con los de ciertos tipos. El misil tiene que comprobar si
+  sino sï¿½lo con los de ciertos tipos. El misil tiene que comprobar si
   colisiona con enemigos. El enemigo tiene que comprobar si colisiona
   con la nave del jugador. Para ello cada sprite tiene un tipo y
   cuando se comprueba si un sprite ha colisionado con otros, se pasa
@@ -53,26 +53,26 @@
   quiere ver si ha colisionado el objeto que se pasa como primer
   argumento.
 
-  Cuando un objeto detecta que ha colisionado con otro llama al método
+  Cuando un objeto detecta que ha colisionado con otro llama al mï¿½todo
   hit() del objeto con el que ha colisionado. El misil cuando llama a
-  hit() de una nave enemiga pasa como parámetro el daño que provoca
-  para que la nave enemiga pueda calcular la reducción de salud que
-  conlleva la colisión.
+  hit() de una nave enemiga pasa como parï¿½metro el daï¿½o que provoca
+  para que la nave enemiga pueda calcular la reducciï¿½n de salud que
+  conlleva la colisiï¿½n.
 
 
   Efectos de las colisiones:
 
   Cuando una nave enemiga recibe la llamada .hit() realizada por un
-  misil que ha detectado la colisión, recalcula su salud reduciéndola
-  en tantas unidades como el daño del misil indique, y si su salud
-  llega a 0 desaparece del tablero de juegos, produciéndose en su
-  lugar la animación de una explosión.
+  misil que ha detectado la colisiï¿½n, recalcula su salud reduciï¿½ndola
+  en tantas unidades como el daï¿½o del misil indique, y si su salud
+  llega a 0 desaparece del tablero de juegos, produciï¿½ndose en su
+  lugar la animaciï¿½n de una explosiï¿½n.
 
   Cuando la nave del jugador recibe la llamada .hit() realizada por
-  una nave enemiga que ha detectado la colisión, desaparece.
+  una nave enemiga que ha detectado la colisiï¿½n, desaparece.
 
-  El misil, tras informar llamando al métod hit() de la nave enemiga
-  con la que ha detectado colisión, desaparece.
+  El misil, tras informar llamando al mï¿½tod hit() de la nave enemiga
+  con la que ha detectado colisiï¿½n, desaparece.
 
   La nave enemiga, tras informar llamando a hit() de la nave del
   jugador, desaparece.
@@ -80,7 +80,7 @@
 */
   
 
-describe("Pruebas de integración. Prototipo 11.", function(){
+describe("Pruebas de integraciï¿½n. Prototipo 11.", function(){
 	
   var OBJECT_PLAYER        =  1,
 	OBJECT_PLAYER_PROJECTILE =  2,
@@ -146,7 +146,7 @@ describe("Pruebas de integración. Prototipo 11.", function(){
 		expect(game.objects[1]).toEqual(undefined);
 	});
 
-	it("Misil colisionando con nave enemiga con daño insuficiente.", function(){
+	it("Misil colisionando con nave enemiga con daï¿½o insuficiente.", function(){
 
 		SpriteSheet.map = {
                                         missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
@@ -234,4 +234,4 @@ describe("Pruebas de integración. Prototipo 11.", function(){
 
     });
 
-});
+
