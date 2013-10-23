@@ -2,31 +2,31 @@
 
   Requisitos:
 
-  El objetivo de este prototipo es añadir al juego naves enemigas. Las
-  naves se añadirán al tablero de juegos (objeto GameBoard) al igual
+  El objetivo de este prototipo es aï¿½adir al juego naves enemigas. Las
+  naves se aï¿½adirï¿½n al tablero de juegos (objeto GameBoard) al igual
   que el resto de los elementos del juego (nave del jugador y
   misiles).
 
-  Cada nave enemiga debe tener un patrón de movimiento que exhibirá
+  Cada nave enemiga debe tener un patrï¿½n de movimiento que exhibirï¿½
   desde que entra por la parte superior del canvas hasta que
   desaparece por la parte inferior. En este prototipo las naves
   enemigos no interaccionan con el resto de los elementos del juego:
   los disparos de la nave del jugador no les afectan. La nave del
-  jugador tampoco se ve afectada por la colisión con una nave enemiga.
+  jugador tampoco se ve afectada por la colisiï¿½n con una nave enemiga.
 
 
-  Especificación:
+  Especificaciï¿½n:
 
-  1. El patrón de movimiento lo dictan las ecuaciones que se
-     utilizarán para calcular las componentes vx e vy de su velocidad.
-     Los parámetros de las ecuaciones que definen vx e vy determinan
-     el patrón de comportamiento:
+  1. El patrï¿½n de movimiento lo dictan las ecuaciones que se
+     utilizarï¿½n para calcular las componentes vx e vy de su velocidad.
+     Los parï¿½metros de las ecuaciones que definen vx e vy determinan
+     el patrï¿½n de comportamiento:
 
      vx = A + B * sin (C * t + D) 
      vy = E + F * sin (G * t + H)
 
      siendo t la edad de un enemigo, calculada como el tiempo que ha
-     pasado desde que se creó la nave.
+     pasado desde que se creï¿½ la nave.
 
      A: componente constante de la velocidad horizontal
      B: fuerza de la velocidad horizontal sinusoidal
@@ -40,22 +40,22 @@
      H: desplazamiento en el tiempo de la velocidad vertical
         sinusoidal
 
-     Todos estos parámetros tendrán un valor por defecto de 0
+     Todos estos parï¿½metros tendrï¿½n un valor por defecto de 0
      (definido en la variable baseParameters en el constructor), que
      puede ser substituido por otro valor cuando se crea la nave.
 
 
-  2. Se creará un nuevo constructor/clase Enemy. Los enemigos se
-     diferenciarán sólo en su posición inicial, en el sprite que
-     utilizan y en el patrón de movimiento (parámetros A..H de la
-     velocidad), pero todos serán de la misma clase: Enemy.
+  2. Se crearï¿½ un nuevo constructor/clase Enemy. Los enemigos se
+     diferenciarï¿½n sï¿½lo en su posiciï¿½n inicial, en el sprite que
+     utilizan y en el patrï¿½n de movimiento (parï¿½metros A..H de la
+     velocidad), pero todos serï¿½n de la misma clase: Enemy.
 
-     Para definir diferentes tipos de enemigos se pasará al
+     Para definir diferentes tipos de enemigos se pasarï¿½ al
      constructor una plantilla con valores para las propiedades (x, y,
      sprite, A..H).
 
-     Para poder definir fácilmente enemigos parecidos creados a partir
-     de una misma plantilla, se pasará un segundo argumento al
+     Para poder definir fï¿½cilmente enemigos parecidos creados a partir
+     de una misma plantilla, se pasarï¿½ un segundo argumento al
      constructor con valores alternativos para algunas de las
      propiedades de la plantilla.
 
@@ -64,6 +64,7 @@ describe("Enemy", function(){
 	
 	var canvas, ctx;
 	var oldGame;
+	var oldSpriteSheet;
 
     beforeEach(function(){
 		loadFixtures('index.html');
@@ -73,6 +74,7 @@ describe("Enemy", function(){
 
 		ctx = canvas.getContext('2d');
 		expect(ctx).toBeDefined();
+		oldSpriteSheet = SpriteSheet;
 		SpriteSheet = {
 			map: {enemy_purple: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 }},
 			draw : function () {}
@@ -82,6 +84,7 @@ describe("Enemy", function(){
     });
 	afterEach(function(){
 		Game=oldGame;
+		SpriteSheet = oldSpriteSheet;
 	});
 	
 	it("Enemy draw", function(){

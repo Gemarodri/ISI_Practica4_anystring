@@ -2,28 +2,28 @@
 
   Requisitos: 
 
-  La nave del usuario disparará 2 misiles si está pulsada la tecla de
+  La nave del usuario dispararï¿½ 2 misiles si estï¿½ pulsada la tecla de
   espacio y ha pasado el tiempo de recarga del arma.
 
-  El arma tendrá un tiempo de recarga de 0,25s, no pudiéndose enviar
+  El arma tendrï¿½ un tiempo de recarga de 0,25s, no pudiï¿½ndose enviar
   dos nuevos misiles antes de que pasen 0,25s desde que se enviaron
   los anteriores
 
 
 
-  Especificación:
+  Especificaciï¿½n:
 
-  - Hay que añadir a la variable sprites la especificación del sprite
+  - Hay que aï¿½adir a la variable sprites la especificaciï¿½n del sprite
     missile
 
-  - Cada vez que el usuario presione la tecla de espacio se añadirán
-    misiles al tablero de juego en la posición en la que esté la nave
-    del usuario. En el código de la clase PlayerSip es donde tienen
-    que añadirse los misiles
+  - Cada vez que el usuario presione la tecla de espacio se aï¿½adirï¿½n
+    misiles al tablero de juego en la posiciï¿½n en la que estï¿½ la nave
+    del usuario. En el cï¿½digo de la clase PlayerSip es donde tienen
+    que aï¿½adirse los misiles
 
   - La clase PlayerMissile es la que implementa los misiles. Es
-    importante que la creación de los misiles sea poco costosa pues va
-    a haber muchos disparos, para lo cual se declararán los métodos de
+    importante que la creaciï¿½n de los misiles sea poco costosa pues va
+    a haber muchos disparos, para lo cual se declararï¿½n los mï¿½todos de
     la clase en el prototipo
 
 */
@@ -31,6 +31,7 @@ describe("PlayerMissile", function(){
 	
 	var canvas, ctx;
 	var oldGame=Game;
+	var oldSpriteSheet;
 
     beforeEach(function(){
 		loadFixtures('index.html');
@@ -41,9 +42,11 @@ describe("PlayerMissile", function(){
 		ctx = canvas.getContext('2d');
 		expect(ctx).toBeDefined();
 		oldGame=Game;
+		oldSpriteSheet = SpriteSheet;
     });
 	afterEach(function(){
-		Game=oldGame;	
+		Game=oldGame;
+		SpriteSheet = oldSpriteSheet;;
 	});
 	
 	it(" Playermyissile draw", function(){
@@ -73,6 +76,11 @@ describe("PlayerMissile", function(){
 		//func = {
 		//	remove : function () {}
 		//}
+		SpriteSheet = {
+				map : {missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 }},
+				draw : function () {}
+		}
+		
 		var dummyEnemy= function(){
 			this.remove = function () {}
 			this.collide= function () {}		

@@ -52,58 +52,73 @@
 
 */
 
-describe("Pruebas unitarias de Level", function(){
+describe("Level", function(){
 
-  var OBJECT_PLAYER        =  1,
-	OBJECT_PLAYER_PROJECTILE =  2,
-	OBJECT_ENEMY             =  4,
-	OBJECT_ENEMY_PROJECTILE  =  8,
-	OBJECT_POWERUP           = 16;
 	
 	var canvas, ctx;
+	var oldGame, oldSpriteSheet;
 
     	beforeEach(function(){
-		loadFixtures('index.html');
-
-		canvas = $('#game')[0];
-		expect(canvas).toExist();
-
-		ctx = canvas.getContext('2d');
-		expect(ctx).toBeDefined();
-    	});
-
-
-describe("Pruebas unitarias. Prototipo 12.", function(){
-
-	it("Level.step().", function(){
-
-			SpriteSheet.map = {
-		                                missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
-		                                enemy_ship: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
-		                                explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 }
-		        };
+			loadFixtures('index.html');
 	
-			var enemies = {
-	   			straight: { x: 0,   y: -50, sprite: 'enemy_ship', health: 10, 
-				E: 100 }
-			};
+			canvas = $('#game')[0];
+			expect(canvas).toExist();
+	
+			ctx = canvas.getContext('2d');
+			expect(ctx).toBeDefined();
+			oldGame = Game;
+			oldSpriteSheet = SpriteSheet;
+    	});
+    	
+    	afterEach(function(){
+    		Game = oldGame;
+    		SpriteSheet = oldSpriteSheet;
+    	})
+
+
+	describe("Pruebas unitarias. Prototipo 12.", function(){
+	
+		it("Level.step().", function(){
+	
+				SpriteSheet.map = {
+			                                missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 },
+			                                enemy_ship: { sx: 37, sy: 0, w: 42, h: 43, frames: 1 },
+			                                explosion: { sx: 0, sy: 64, w: 64, h: 64, frames: 12 }
+			        };
 		
-			var level1 = [
-				[ 17800,    20000, 500,         'straight', { x: 50  } ]
-			];
-			var game = new GameBoard();
-			var callback = function(){return false;};
-
-			var nivel = new Level(level1,callback);
-			nivel.levelData = level1;
-			nivel.callback = callback;
-			nivel.t = 0;
-			nivel.board = game;
-			nivel.step(18);
-
-			expect(game.objects.length).toEqual(1);
+				var enemies = {
+		   			straight: { x: 0,   y: -50, sprite: 'enemy_ship', health: 10, 
+					E: 100 }
+				};
+			
+				var level1 = [
+					[ 17800,    20000, 500,         'straight', { x: 50  } ]
+				];
+				var game = new GameBoard();
+				var callback = function(){return false;};
+	
+				var nivel = new Level(level1,callback);
+				nivel.levelData = level1;
+				nivel.callback = callback;
+				nivel.t = 0;
+				nivel.board = game;
+				nivel.step(18);
+	
+				expect(game.objects.length).toEqual(1);
+		
+		});
 	
 	});
-
-});
+	
+	describe("Pruebas de Integracion.",function(){
+		
+		it("Level 1. La nave no colisiona y el nivel pasa.",function(){
+			Game.initialize("game",sprites,startGame);
+		});
+		
+		it("Level 1. La nave colisiona y el nivel no pasa.",function(){
+			
+		});
+		
+	});
 });

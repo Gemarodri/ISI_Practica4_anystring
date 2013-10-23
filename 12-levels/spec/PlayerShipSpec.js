@@ -7,20 +7,23 @@ describe("Clase PlayerShip", function(){
 
     var canvas, ctx;
     var oldGame=Game;
+    var oldSpriteSheet;
 
     beforeEach(function(){
-	loadFixtures('index.html');
-
-	canvas = $('#game')[0];
-	expect(canvas).toExist();
-
-	ctx = canvas.getContext('2d');
-	expect(ctx).toBeDefined();
-	oldGame=Game;
+		loadFixtures('index.html');
+	
+		canvas = $('#game')[0];
+		expect(canvas).toExist();
+	
+		ctx = canvas.getContext('2d');
+		expect(ctx).toBeDefined();
+		oldGame=Game;
+		oldSpriteSheet = SpriteSheet;
 
     });
 	afterEach(function(){
-		Game=oldGame;	
+		Game=oldGame;
+		SpriteSheet = oldSpriteSheet;
 	});
 
 

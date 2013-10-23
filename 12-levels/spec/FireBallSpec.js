@@ -1,7 +1,8 @@
 describe("FireBall", function(){
 	
 	var canvas, ctx;
-	var oldGame=Game
+	var oldGame=Game;
+	var oldSpriteSheet;
 
     beforeEach(function(){
 		loadFixtures('index.html');
@@ -11,7 +12,7 @@ describe("FireBall", function(){
 
 		ctx = canvas.getContext('2d');
 		expect(ctx).toBeDefined();
-		
+		oldSpriteSheet = SpriteSheet;
 		SpriteSheet = {
 			map: { 
 				fireball_1: { sx: 0, sy: 64, w: 64, h: 64, frames: 1 } 
@@ -22,6 +23,7 @@ describe("FireBall", function(){
 		oldGame=Game;
     });
 	afterEach(function(){
+		SpriteSheet = oldSpriteSheet;
 		Game=oldGame;	
 	});
 	
