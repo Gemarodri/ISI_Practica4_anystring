@@ -15,25 +15,25 @@ var sprites = {
 var enemies = {
 
 	basic: { x: 100, y: -50, sprite: 'enemy_purple', B: 100, C: 4, E: 100, health: 20 },
-    // straight sólo tiene el parámetro E para la velocidad vertical,
+    // straight sï¿½lo tiene el parï¿½metro E para la velocidad vertical,
     // por lo que se mueve hacia abajo a velocidad constante.
     straight: { x: 0,   y: -50, sprite: 'enemy_ship', health: 10, 
 		E: 100 },
 
     //  ltr (left to right) tiene velocidad constante vertical pero
-    //  tiene parámetros B y C que le dotan de una velocidad
+    //  tiene parï¿½metros B y C que le dotan de una velocidad
     //  horizontal sinusoidal suave.
     ltr:      { x: 0,   y: -100, sprite: 'enemy_purple', health: 10, 
 		B: 75, C: 1, E: 100  },
 
     // circle tiene velocidad sinusoidal vx e vy, que junto al
-    // parámetro H de desplazamiento en el tiempo le dotan de un
+    // parï¿½metro H de desplazamiento en el tiempo le dotan de un
     // movimiento circular.
     circle:   { x: 250,   y: -50, sprite: 'enemy_circle', health: 10, 
 		A: 0,  B: -100, C: 1, E: 20, F: 100, G: 1, H: Math.PI/2 },
 
-    //  wiggle y step tienen los mismos parámetros pero con diferentes
-    //  magnitudes que les hacen serpentear de manera diferente según
+    //  wiggle y step tienen los mismos parï¿½metros pero con diferentes
+    //  magnitudes que les hacen serpentear de manera diferente segï¿½n
     //  van bajando.
     wiggle:   { x: 100, y: -50, sprite: 'enemy_bee', health: 20, 
 		B: 50, C: 4, E: 100 },
@@ -59,15 +59,15 @@ var startGame = function() {
 
 
 
-// Definición del nivel level1.  
+// Definiciï¿½n del nivel level1.  
 
-// Está definido por una colección de
-// baterías de naves enemigas, una por fila. Para cada fila, los
-// enemigos de esa batería se comienzan a crear cuando llega el
-// Comienzo de la batería, y se están creando hasta que llega el Fin
-// de la batería, con una separación entre cada dos enemigos creados
+// Estï¿½ definido por una colecciï¿½n de
+// baterï¿½as de naves enemigas, una por fila. Para cada fila, los
+// enemigos de esa baterï¿½a se comienzan a crear cuando llega el
+// Comienzo de la baterï¿½a, y se estï¿½n creando hasta que llega el Fin
+// de la baterï¿½a, con una separaciï¿½n entre cada dos enemigos creados
 // de Frecuencia ms.  Para cada tanda de enemigos se especifica su
-// tipo para poder encontrar su plantilla en enemies, y parámetros
+// tipo para poder encontrar su plantilla en enemies, y parï¿½metros
 // override que substituyen a los de la plantilla en enemies para ese
 // enemigo.
 
@@ -91,8 +91,8 @@ var playGame = function() {
     var board = new GameBoard();
     board.add(new PlayerShip());
 
-    // Se un nuevo nivel al tablero de juego, pasando la definición de
-    // nivel level1 y la función callback a la que llamar si se ha
+    // Se un nuevo nivel al tablero de juego, pasando la definiciï¿½n de
+    // nivel level1 y la funciï¿½n callback a la que llamar si se ha
     // ganado el juego
     board.add(new Level(level1, sigLevel));
     Game.setBoard(3,board);
@@ -102,8 +102,8 @@ var secondLevel = function() {
     var board = new GameBoard();
     board.add(new PlayerShip());
 
-    // Se un nuevo nivel al tablero de juego, pasando la definición de
-    // nivel level1 y la función callback a la que llamar si se ha
+    // Se un nuevo nivel al tablero de juego, pasando la definiciï¿½n de
+    // nivel level1 y la funciï¿½n callback a la que llamar si se ha
     // ganado el juego
     board.add(new Level(level2, winGame));
     Game.setBoard(3,board);
@@ -138,7 +138,7 @@ var loseGame = function() {
 // transparente, sino fondo en negro
 var Starfield = function(speed,opacity,numStars,clear) {
 
-    // Creamos un objeto canvas, no visible en la página Web
+    // Creamos un objeto canvas, no visible en la pï¿½gina Web
     var stars = $('<canvas/>')
 	.attr('width', Game.width)
 	.attr('height', Game.height)[0];
@@ -152,7 +152,7 @@ var Starfield = function(speed,opacity,numStars,clear) {
 
     var offset = 0;
 
-    // Si la opción clear está activada, el fondo del canvas se pinta
+    // Si la opciï¿½n clear estï¿½ activada, el fondo del canvas se pinta
     // de negro. Utilizado en el nivel mas profundo de estrellas
     if(clear) {
 	starCtx.fillStyle = "#000";
@@ -160,7 +160,7 @@ var Starfield = function(speed,opacity,numStars,clear) {
     }
 
     // Dibujamos las estrellas blancas sobre el canvas no visible,
-    // como rectángulos de 2 pixeles en posiciones aleatorias
+    // como rectï¿½ngulos de 2 pixeles en posiciones aleatorias
     starCtx.fillStyle = "#FFF";
     starCtx.globalAlpha = opacity; // nivel de transparencia de las estrellas
     for(var i=0;i<numStars;i++) {
@@ -170,7 +170,7 @@ var Starfield = function(speed,opacity,numStars,clear) {
 			 2);
     }
 
-    // Se llama a este método en cada frame de la animación para dibujar
+    // Se llama a este mï¿½todo en cada frame de la animaciï¿½n para dibujar
     // el campo de estrellas en la pantalla
     this.draw = function(ctx) {
 	var intOffset = Math.floor(offset);
@@ -197,8 +197,8 @@ var Starfield = function(speed,opacity,numStars,clear) {
 	}
     }
 
-    // En cada paso de la animación, movemos el campo de estrellas
-    // modificando el offset según la cantidad de tiempo transcurrida
+    // En cada paso de la animaciï¿½n, movemos el campo de estrellas
+    // modificando el offset segï¿½n la cantidad de tiempo transcurrida
     this.step = function(dt) {
 	offset += dt * speed; // velocidad = espacio / tiempo
 	offset = offset % stars.height;
@@ -238,7 +238,7 @@ var PlayerShip = function() {
 	    
 	    this.reload = this.reloadTime;
 
-	    // Se añaden al gameboard 2 misiles 
+	    // Se aï¿½aden al gameboard 2 misiles 
 	    this.board.add(new PlayerMissile(this.x,this.y+this.h/2));
 	    this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
 	}
@@ -278,14 +278,13 @@ PlayerShip.prototype.type = OBJECT_PLAYER;
 PlayerShip.prototype.hit = function(damage) {
     this.board.add(new Explosion(this.x + this.w/2, this.y + this.h/2));
     if(this.board.remove(this)) {
-  //alert(this.sprite);
 	setTimeout(loseGame,1000);
     }
 };
 
 
 // Constructor para los misiles.
-// Los metodos de esta clase los añadimos a su prototipo. De esta
+// Los metodos de esta clase los aï¿½adimos a su prototipo. De esta
 // forma solo existe una copia de cada uno para todos los misiles, y
 // no una copia para cada objeto misil
 var PlayerMissile = function(x,y) {
@@ -326,7 +325,7 @@ FireBall.prototype.step = function(dt)  {
     if(collision) {
       this.board.add(new Explosion(this.x + this.w/2, 
                                      this.y + this.h/2));
-	//alert("dano misil: "+this.damage);
+
 	    collision.hit(this.damage);
 	    this.board.remove(collision);
       } else if(this.y < -this.h) { 
@@ -341,32 +340,32 @@ FireBall.prototype.step = function(dt)  {
 // un conjunto de propiedades provenientes de 3 sitios distintos, que
 // se aplican  este orden:
 // 1. baseParameters: propiedad del prototipo con los valores por
-//    omisión para las constantes A..H de las velocidades vx y vy
-// 2. parámetros definidos en la plantilla blueprint que se pasa como
-//    parámetro al crear el enemigo. Pueden modificar las propiedades
+//    omisiï¿½n para las constantes A..H de las velocidades vx y vy
+// 2. parï¿½metros definidos en la plantilla blueprint que se pasa como
+//    parï¿½metro al crear el enemigo. Pueden modificar las propiedades
 //    definidas en 1.
-// 3. parámetros definidos en el parámetro override. Pueden modificar
+// 3. parï¿½metros definidos en el parï¿½metro override. Pueden modificar
 // las propiedades definidas en 1 y 2.
 
-// El código del constructor añade las propiedades en este orden al
+// El cï¿½digo del constructor aï¿½ade las propiedades en este orden al
 // objeto que crea.
 
 // Para definir un nuevo tipo de enemigo: se elige una plantilla
 // existente o se crea una nueva, y se pasan opcionalmente en override
-// valores alternativos para los parámetros de la plantilla o de
-// baseParameters. Ver cómo se añaden 2 enemigos en la función
+// valores alternativos para los parï¿½metros de la plantilla o de
+// baseParameters. Ver cï¿½mo se aï¿½aden 2 enemigos en la funciï¿½n
 // playGame() de este fichero.
 
 var Enemy = function(blueprint,override) {
-    // Cada instancia tendrá las propiedades definidas en baseParameters
+    // Cada instancia tendrï¿½ las propiedades definidas en baseParameters
     this.merge(this.baseParameters);
 
-    // Se llama a setup para que se añadan como propiedades el sprite
-    // y los atributos definidos en el parámetro blueprint, pudiendo
+    // Se llama a setup para que se aï¿½adan como propiedades el sprite
+    // y los atributos definidos en el parï¿½metro blueprint, pudiendo
     // estas modificar los definidos en baseParameters
     this.setup(blueprint.sprite,blueprint);
 
-    // Se copian los atributos definidos en el parámetro override,
+    // Se copian los atributos definidos en el parï¿½metro override,
     // pudiendo modificar los definidos en baseParameters y en
     // blueprint
     this.merge(override);
@@ -375,7 +374,7 @@ var Enemy = function(blueprint,override) {
 Enemy.prototype = new Sprite();
 Enemy.prototype.type = OBJECT_ENEMY;
 
-// Inicializa los parámetros de las ecuacione de velocidad, y t, que
+// Inicializa los parï¿½metros de las ecuacione de velocidad, y t, que
 // es la edad de este enemigo
 Enemy.prototype.baseParameters = { A: 0, B: 0, C: 0, D: 0, 
                                    E: 0, F: 0, G: 0, H: 0,
@@ -385,11 +384,11 @@ Enemy.prototype.step = function(dt) {
     // Actualizamos la edad
     this.t += dt;
 
-    // El patrón de movimiento lo dictan las ecuaciones que se utilizarán
+    // El patrï¿½n de movimiento lo dictan las ecuaciones que se utilizarï¿½n
     // para calcular las componentes x e y de su velocidad: vx e vy:
     
     // vx tiene una componente constante A, y otra que va variando
-    // cíclicamente en función de la edad del enemigo (t), según la
+    // cï¿½clicamente en funciï¿½n de la edad del enemigo (t), segï¿½n la
     // sinuisoide definida por las constantes B, C y D.
     // A: componente constante de la velocidad horizontal
     // B: fuerza de la velocidad horizontal sinusoidal
@@ -398,7 +397,7 @@ Enemy.prototype.step = function(dt) {
     this.vx = this.A + this.B * Math.sin(this.C * this.t + this.D);
 
     // vy tiene una componente constante E, y otra que va variando
-    // cíclicamente en función de la edad del enemigo (t), según la
+    // cï¿½clicamente en funciï¿½n de la edad del enemigo (t), segï¿½n la
     // sinuisoide definida por las constantes F, G y H.
     // E: componente constante de la velocidad vertical
     // F: fuerza de la velocidad vertical sinusoidal
@@ -432,7 +431,7 @@ Enemy.prototype.hit = function(damage) {
 }
 
 
-// Constructor para la explosión
+// Constructor para la explosiï¿½n
 
 var Explosion = function(centerX,centerY) {
     this.setup('explosion', { frame: 0 });

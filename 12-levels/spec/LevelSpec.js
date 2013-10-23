@@ -110,15 +110,4 @@ describe("Level", function(){
 	
 	});
 	
-	describe("Pruebas de Integracion.",function(){
-		
-		it("Level 1. La nave no colisiona y el nivel pasa.",function(){
-			Game.initialize("game",sprites,startGame);
-		});
-		
-		it("Level 1. La nave colisiona y el nivel no pasa.",function(){
-			
-		});
-		
-	});
 });
